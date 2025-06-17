@@ -1,0 +1,331 @@
+<!doctype html>
+<html lang="de">
+
+<head>
+  <script src="https://www.google.com/recaptcha/api.js"></script>
+  <meta charset="utf-8">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="fonts/icomoon/style.css">
+
+  <link rel="stylesheet" href="css/owl.carousel.min.css">
+
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+
+  <link rel="stylesheet" href="css/style.css">
+
+  <title>HeFa Anmeldung</title>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-5BN32GVM0J"></script>
+  <script>
+
+
+
+    var cookieName = "CookieStatus";
+    var cookieValue = "Status";
+    var cookieExpireDays = 30;
+
+    // get cookie from the web browser
+    let getCookie2 = function (cookieName) {
+      let name = cookieName + "=";
+      let decodedCookie = decodeURIComponent(document.cookie);
+      let ca = decodedCookie.split(';');
+      for (let i = 0; i < ca.length; i++) {
+        let c = ca[i];
+        while (c.charAt(0) == ' ') {
+          c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+          return c.substring(name.length, c.length);
+        }
+      }
+      return "";
+    }
+    // check cookie is set or not
+    let checkCookie2 = function () {
+      let check = getCookie2(cookieName);
+      if (check == "") {
+
+      } else {
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-5BN32GVM0J');
+
+      }
+    }
+    checkCookie2();
+
+
+  </script>
+
+
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
+</head>
+
+<body>
+  <div class="content">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-md-6 contents">
+          <div class="row justify-content-center">
+            <div class="col-md-12">
+              <div class="form-block" id="block">
+                <div class="mb-4">
+                  <h3><strong>HeFa</strong> Anmeldung</h3>
+                </div>
+
+
+
+                <script>
+                  checked = 0
+                </script>
+
+                <form action="#" method="post" id="f1">
+                  <div class="form-group first">
+                    <label for="cname">Name des Kindes</label>
+                    <input type="text" class="form-control" id="cname">
+                  </div>
+                  <div class="form-group first">
+                    <label for="cbd" style="margin-top: -20px;">Geburtsdatum des Kindes</label>
+                    <input type="date" class="form-control" id="cbd">
+                  </div>
+                  <div class="form-group first">
+                    <label for="username">Name des Erziehungsberechtigten</label>
+                    <input type="text" class="form-control" id="username">
+                  </div>
+                  <!--div class="form-group first">
+                    <label for="birth" style="margin-top: -20px;">Geburtsdatum des Erziehungsberechtigten</label>
+                    <input type="date" class="form-control" id="birth">
+                  </div-->
+                  <div class="form-group first">
+                    <label for="adresse">Adresse des Erziehungsberechtigten</label>
+                    <input type="text" class="form-control" id="adresse">
+                  </div>
+                  <div class="form-group first">
+                    <label for="eadresse">E-Mail Adresse des Erziehungsberechtigten</label>
+                    <input type="text" class="form-control" id="eadresse">
+                  </div>
+                  <div class="form-group first">
+                    <label for="tnm">Telefonnummer des Erziehungsberechtigten</label>
+                    <input type="text" class="form-control" id="tnm">
+                  </div>
+
+                  <div class="form-group first">
+                    <label for="furL">Häufigste Allergien/Intoleranzen</label>
+                    <select class="form-control" id="furL">
+                      <option disabled selected value></option>
+                      <option value="Keine/Andere">Keine/Andere</option>
+                      <option value="Vegan">Vegan</option>
+                      <option value="Vegetarisch">Vegetarisch</option>
+                      <option value="Laktoseintoleranz">Laktoseintoleranz</option>
+                      <option value="Kein Schweinefleisch">Kein Schweinefleisch</option>
+                    </select>
+                    <div style="height: 1px; width: 100%; background-color: lightgray"></div>
+                  </div>
+                  <div class="form-group first">
+                    <label for="fur">Weitere Informationen (Intoleranzen, Medikamente)</label>
+                    <input type="text" class="form-control" id="fur">
+                  </div>
+                  <label>
+                    <input type="checkbox" id="zust">
+                    <span class="label-text">Ich stimme der <a href="policy.html">Datenschutzbestimmung</a>, <a href="upload.html">Verwendung von Bildmaterial</a>, <a href="upload.html">Haftungsausschluss</a> und den <a href="storno.html">Bedingungen für Storno</a> zu</span>
+                  </label>
+                  <div class="g-recaptcha" data-sitekey="6LdR87QjAAAAAM_T_4XKDoUUaRbhdbweXe0kkqER"
+                    data-callback="callback"></div>
+                  <br />
+
+                  <script>
+                    function callback() {
+                      checked = 1
+                    }
+                  </script>
+                  <button class="g-recaptcha btn btn-pill text-white btn-block btn-primary"
+                    data-sitekey="6Lea57QjAAAAAAvynBf8Ei6OYmCANQP7RWYPi0cY" data-callback='onSubmit'
+                    data-action='submit'>Anmelden</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+    </div>
+  </div>
+
+  <script src="js/jquery-3.3.1.min.js"></script>
+  <script src="js/popper.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <div id="border2"></div>
+  <div id="border"></div>
+  <div id="fpopup">
+    <div id="fdiv">
+
+    </div>
+  </div>
+  <script src="js/anmeldung.js"></script>
+  <div id="target"></div>
+  <div id="cookiePopup">
+    <h4 style="margin-top: 10px;">Cookies Policy</h4>
+    <p>Diese Website verwendet Cookies und Cache Speicher um das Nutzer-Verhalten zu analysieren und Einstellungen lokal
+      zu speichern. Klicke <a href="policy">hier</a> um die Cookie Policy anzusehen. Bitte halten Sie sich beim Verwenden dieser Website an die <a href="richtlinien">Richtlinien</a>!</p>
+    <button id="acceptCookie">Annehmen</button>
+  </div>
+  <style>
+    body {
+      height: 100%;
+    }
+    #block {
+      margin-top: -100px;
+    }
+
+    #border {
+      position: absolute;
+      top: 0px;
+      right: 0px;
+      bottom: 0px;
+      left: 0px;
+      width: 100%;
+      height: 150%;
+      background-color: #d4d4d479;
+    }
+
+    #border2 {
+      position: absolute;
+      top: 0px;
+      right: 0px;
+      bottom: 0px;
+      left: 0px;
+      width: 100%;
+      height: 150%;
+      background-color: #d4d4d479;
+    }
+
+    #cookiePopup {
+      background: white;
+      width: auto;
+      position: fixed;
+      left: 10px;
+      bottom: 20px;
+      box-shadow: 0px 0px 15px #cccccc;
+      padding: 5px 10px;
+      border-radius: 12px;
+      margin-right: 10px;
+    }
+
+    #fpopup {
+      background: white;
+      width: auto;
+      position: fixed;
+      left: 10px;
+      bottom: 20px;
+      box-shadow: 0px 0px 15px #cccccc;
+      padding: 5px 10px;
+      border-radius: 12px;
+      margin-right: 10px;
+    }
+
+    #cookiePopup p {
+      text-align: left;
+      font-size: 15px;
+      color: #4e4e4e;
+    }
+
+    #fpopup p {
+      text-align: left;
+      font-size: 15px;
+      color: #4e4e4e;
+    }
+
+    #cookiePopup button {
+      width: 100%;
+      height: 50px;
+      border: navajowhite;
+      background: #38d39f;
+      padding: 5px;
+      border-radius: 90px;
+      margin-bottom: 10px;
+      color: white;
+    }
+
+    #fpopup button {
+      width: 100%;
+      height: 50px;
+      border: navajowhite;
+      background: #38d39f;
+      padding: 5px;
+      border-radius: 90px;
+      margin-bottom: 10px;
+      color: white;
+    }
+  </style>
+  <script type="text/javascript">
+    // set cookie according to you
+    var cookieName = "CookieStatus";
+    var cookieValue = "Status";
+    var cookieExpireDays = 30;
+
+
+    // function to set cookie in web browser
+    let createCookie = function (cookieName, cookieValue, cookieExpireDays) {
+      document.getElementById("border").style.height = "0px"
+      location.reload();
+      let currentDate = new Date();
+      currentDate.setTime(currentDate.getTime() + (cookieExpireDays * 24 * 60 * 60 * 1000));
+      let expires = "expires=" + currentDate.toGMTString();
+      document.cookie = cookieName + "=" + cookieValue + ";" + expires + ";path=/";
+      if (document.cookie) {
+        document.getElementById("cookiePopup").style.display = "none";
+      } else {
+        alert("Unable to set cookie. Please allow all cookies site from cookie setting of your browser");
+      }
+
+    }
+
+    // when users click accept button
+    let acceptCookie = document.getElementById("acceptCookie");
+    acceptCookie.onclick = function () {
+      createCookie(cookieName, cookieValue, cookieExpireDays);
+    }
+
+
+    // get cookie from the web browser
+    let getCookie = function (cookieName) {
+      let name = cookieName + "=";
+      let decodedCookie = decodeURIComponent(document.cookie);
+      let ca = decodedCookie.split(';');
+      for (let i = 0; i < ca.length; i++) {
+        let c = ca[i];
+        while (c.charAt(0) == ' ') {
+          c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+          return c.substring(name.length, c.length);
+        }
+      }
+      return "";
+    }
+    // check cookie is set or not
+    let checkCookie = function () {
+      let check = getCookie(cookieName);
+      if (check == "") {
+        document.getElementById("cookiePopup").style.display = "block";
+      } else {
+
+        document.getElementById("cookiePopup").style.display = "none";
+        document.getElementById("border").style.height = "0px"
+
+      }
+    }
+    checkCookie();
+  </script>
+
+</body>
+
+</html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Diashow</title>
+</head>
+<body>
+<div class="container">
+    <!--Area of the images-->
+    <div class="wrapper" id="imgc">
+
+    </div>
+
+</div>
+<script>
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const year = urlParams.get('y')
+    var request = new XMLHttpRequest();
+    request.open("GET", `./images/public/hefa/${year}/images.json`, false);
+    request.send(null);
+    var jsonData = JSON.parse(request.responseText);
+    len = jsonData["count"]
+    var container1 = document.getElementById('imgc');
+    for (let count = 0; count < len; count++) {
+        container1.innerHTML += `
+                    <img src="./images/public/hefa/${year}/${count + 1}.jpg" alt="${count + 1}.jpg" style="width: 100%; object-fit: contain;"/>
+            `;
+    };
+</script>
+</body>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        body{
+            background-color: #0c0c0c;
+        }
+
+        /*Basic structure of slider*/
+        .container{
+            width: auto;
+            position: absolute;
+            transform: translate(-50%,-50%);
+            top: 50%;
+            left: 50%;
+            overflow: hidden;
+            /*border: 10px solid #ffffff;*/
+            border-radius: 10px;
+            /*box-shadow: -1px 5px 15px black;*/
+        }
+
+        /*Area of images*/
+        .wrapper{
+            width: 100%;
+            display: flex;
+            animation: slide 16s infinite;
+            border-radius: 10px;
+        }
+
+        img{
+            width: 100%;
+        }
+        /*Animation activated by keyframes*/
+        @keyframes slide{
+            0%{
+                transform: translateX(0);
+            }
+            25%{
+                transform: translateX(0);
+            }
+            30%{
+                transform: translateX(-100%);
+            }
+            50%{
+                transform: translateX(-100%);
+            }
+            55%{
+                transform: translateX(-200%);
+            }
+            75%{
+                transform: translateX(-200%);
+            }
+            80%{
+                transform: translateX(-300%);
+            }
+            100%{
+                transform: translateX(-300%);
+            }
+        }
+    </style>
+</html>

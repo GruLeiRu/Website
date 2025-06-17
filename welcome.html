@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="fonts/icomoon/style.css">
+
+    <link rel="stylesheet" href="css/owl.carousel.min.css">
+
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <title id="siteTitle">Wilkommen</title>
+</head>
+<body>
+    <div class="main"></div>
+</body>
+
+<style>
+    body {
+        background-color: white;
+    }
+    .main {
+        width: 200px;
+        height: 200px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin-left: -100px;
+        margin-top: -100px;
+        opacity: 1;
+        background-color: white;
+        animation-name: main;
+        animation-duration: 1s;
+        animation-fill-mode: forwards;
+        border-radius: 100px;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.36);
+        scale: 1;
+    }
+    .main:hover {
+        animation-name: mainHover;
+        animation-duration: 8s;
+        animation-delay: 0.3s;
+        animation-fill-mode: forwards;
+    }
+    .main:not(:hover) {
+        animation-name: mainHoverAfter;
+        animation-duration: 2s;
+        animation-delay: 0s;
+        animation-fill-mode: forwards;
+    }
+    @keyframes  mainHoverAfter {
+        100% {
+            width: 200px;                                                                                         
+            height: 200px;                                                                                        
+            position: absolute;                                                                                   
+            top: 50%;                                                                                             
+            left: 50%;                                                                                            
+            margin-left: -100px;                                                                                  
+            margin-top: -100px;                                                                                   
+            opacity: 1;                                                                                           
+            background-color: white;                                                                              
+            animation-name: main;                                                                                 
+            animation-duration: 1s;                                                                               
+            animation-fill-mode: forwards;                                                                        
+            border-radius: 100px;                                                                                 
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.36);                                                             
+            scale: 1;                                                                                             
+        }
+    }
+
+
+
+
+
+
+    @keyframes mainHover {
+        0% {
+            border-radius: 100px;
+            width: 200px;
+            height: 200px;
+        }
+        12% {
+            border-radius: 30px;
+            height: 400px;
+            width: 400px;
+            margin-left: -200px;
+            margin-top: -200px;
+            rotate: 0deg;
+        }
+        25% {
+            border-radius: 30px;
+            height: 600px;
+            width: 400px;         
+            margin-left: -200px;
+            margin-top: -300px;
+            rotate: 90deg;
+        }
+        37% {
+            border-radius: 300px;
+            height: 400px;
+            width: 400px;
+            margin-left: -200px;
+            margin-top: -200px;
+            rotate: 270deg;
+        }
+        37.01% {
+            rotate: 0deg;
+        }
+        50% {
+            border-radius: 100px;
+            width: 200%;
+            height: 200%;
+            margin-left: -100%;
+            margin-top: -100%;
+            rotate: 0deg;
+            opacity: 1;
+        }
+        50.01% {
+            width: 200px;
+            height: 200px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin-left: -100px;
+            margin-top: -100px;
+            opacity: 0;
+            background-color: white;
+            animation-name: main;
+            animation-duration: 1s;
+            animation-fill-mode: forwards;
+            border-radius: 100px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.36);
+            scale: 1;                                               
+        }
+        100% {
+            width: 200px;
+            height: 200px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin-left: -100px;
+            margin-top: -100px;
+            opacity: 1;
+            background-color: white;
+            animation-name: main;
+            animation-duration: 1s;
+            animation-fill-mode: forwards;
+            border-radius: 100px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.36);
+            scale: 1;
+        }
+    }
+
+
+
+
+</style>
+
+</html>

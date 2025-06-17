@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>GruLeiRu T-Shirt</title>
+</head>
+<body>
+    <div class="center">
+        <div class="box" id="ts0">
+            <img class="image" src="images/ts0.jpg">
+            <span class="title">T-Shirt</span>
+            <span class="price">20€</span>
+            <img class="cart" src="images/cart.png" onclick="addToCart(0)">
+            <!-- The Modal -->
+            <div id="ts0Modal" class="modal">
+                <span class="close">&times;</span>
+                <img class="modal-content" id="img00">
+                <div id="caption0" class="caption"></div>
+            </div>
+        </div>
+        <div class="box" id="ts1">
+            <img class="image" src="images/ts1.jpg">
+            <span class="title">T-Shirt</span>
+            <span class="price">20€</span>
+            <img class="cart" src="images/cart.png" onclick="addToCart(1)">
+            <div id="ts1Modal" class="modal">
+                <span class="close">&times;</span>
+                <img class="modal-content" id="img01">
+                <div id="caption1" class="caption"></div>
+            </div>
+        </div>
+
+        <div class="cartBox">
+            <span id="cartTitle">Warenkorb</span>
+            <div id="cart"></div>
+            <div id="order"><span>Bestellen</span></div>
+            <div style="height: 10px"></div>
+        </div>
+
+        <div class="alert">
+            <div class="margeBlock">
+                <span class="warn">
+                Falls Sie ein T-Shirt kaufen, bekommen Sie dieses am Tag der Abreise zur Herbstfahrt ausgeteilt, bitte denken
+                Sie jedoch auch daran, das Geld passen mitzubringen, da wir nur Zahlung vor Ort akzeptieren. Ein vorzeitiges
+                Liefern oder Bezahlen ist nicht möglich.
+            </span>
+            </div>
+        </div>
+    </div>
+</body>
+    <script>
+
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        const uid = urlParams.get('id')
+
+        var cart = [];
+        var items = ["GruLeiRu T-Shirt (20€)", "I love HeFa T-Shirt (20€)"];
+        function addToCart(id) {
+            cart.push(id);
+            var cartDiv = document.getElementById("cart");
+            cartDiv.innerHTML = "";
+            for (var i = 0; i < cart.length; i++) {
+                var item = document.createElement("div");
+                item.innerHTML = "<span class='cartItem'>" + items[cart[i]] + "</span>";
+                cartDiv.appendChild(item);
+            }
+            if (cart.length > 0) {
+                var alert = document.getElementsByClassName("alert")[0];
+                alert.style.display = "none";
+                var order = document.getElementById("order")
+                order.style.display = "block";
+
+            }
+        }
+        var order = document.getElementById("order")
+        var Http = new XMLHttpRequest();
+        order.onclick = function() {
+            var orderString = "";
+            for (var i = 0; i < cart.length; i++) {
+                orderString += items[cart[i]] + "\n";
+            }
+            const url=`https://regapi.gruleiru.de/order?id=${uid}&order=${orderString}`;
+            Http.open("GET", url);
+            Http.send();
+            Http.onload = (e) => {
+                alert("Bestellung aufgegeben. Sie erhalten in kürze eine Bestätigung per Mail");
+            }
+        }
+    </script>
+    <style>
+        html {
+            height: 100%;
+        }
+        span {
+            font-family: "GT America",serif;
+        }
+        @font-face {
+            font-family: "GT America";
+            src: url("./fonts/GT America Extended Regular.otf") format("opentype");
+        }
+
+        #cartTitle {
+            font-size: 50px;
+            font-weight: bold;
+            margin-left: 20px;
+            margin-top: 15px;
+        }
+
+        #cart {
+            margin-top: 10px;
+            margin-bottom: 20px;
+        }
+
+        #order {
+            width: 200px;
+            height: 50px;
+            background-color: rgba(113, 239, 136, 0.89);
+            border-radius: 10px;
+            margin: 20px auto auto;
+            text-align: center;
+            line-height: 50px;
+            font-size: 30px;
+            cursor: pointer;
+            display: none;
+            margin-bottom: 30px;
+        }
+
+        .cartBox {
+            border-radius: 20px;
+            background-color: #f1f1f1;
+            width: 760px;
+            box-shadow: 0 0 15px 15px rgba(0, 0, 0, 0.13);
+            min-height: 100px;
+            margin: 30px auto auto;
+        }
+
+        .cartItem {
+            font-size: 30px;
+            cursor: pointer;
+        }
+
+        .center {
+            text-align: center;
+            margin-top: 20%;
+            width: 90%;
+            margin-left: 5%;
+        }
+        .box {
+            margin: 30px;
+            width: 350px;
+            height: auto;
+            min-height: 350px;
+            background-color: #f1f1f1;
+            border-radius: 20px;
+            box-shadow: 0 0 15px 15px rgba(0, 0, 0, 0.13);
+            background-size: cover;
+            background-repeat: no-repeat;
+            display: inline-block;
+            position: relative;
+        }
+        .image {
+            width: 100%;
+            height: auto;
+            border-radius: 20px;
+            visibility: hidden;
+        }
+        .title {
+            position: absolute;
+            top: 79%;
+            width: 100%;
+            left: 0;
+            color: black;
+            font-size: 45px;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+        .price {
+            position: absolute;
+            top: 90%;
+            width: 100%;
+            left: 0;
+            color: black;
+            font-size: 30px;
+            align-items: center;
+            justify-content: center;
+        }
+        .cart {
+            position: absolute;
+            top: 86%;
+            left: 80%;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+        }
+        .alert {
+            margin: 60px auto auto;
+            width: 760px;
+            height: 130px;
+            background-color: #f1f1f1;
+            border-radius: 20px;
+            box-shadow: 0 0 15px 15px rgba(0, 0, 0, 0.13);
+            text-align: center;
+        }
+        .warn {
+            display: block;
+            width: 90%;
+            margin-left: 5%;
+            color: red;
+            font-size: 20px;
+        }
+        #ts0 {
+            background-image: linear-gradient(to bottom, rgba(2,0,36,0) 77%, rgb(241, 241, 241) 80%, rgb(241, 241, 241) 100%), url('images/ts0.jpg');
+        }
+        #ts1 {
+            background-image: linear-gradient(to bottom, rgba(2,0,36,0) 77%, rgb(241, 241, 241) 80%, rgb(241, 241, 241) 100%), url('images/ts1.jpg');
+
+        }
+    </style>
+    <style>
+        #myImg {
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        #myImg:hover {opacity: 0.7;}
+
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            padding-top: 100px; /* Location of the box */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgb(0,0,0); /* Fallback color */
+            background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
+        }
+        .modal-content {
+            margin: auto;
+            display: block;
+            width: 80%;
+            max-width: 700px;
+        }
+
+        .caption {
+            margin: auto;
+            display: block;
+            width: 80%;
+            max-width: 700px;
+            text-align: center;
+            color: #ccc;
+            padding: 10px 0;
+            height: 150px;
+            font-family: "GT America",serif;
+            font-size: 50px;
+        }
+
+        .modal-content, #caption {
+            animation-name: zoom;
+            animation-duration: 0.6s;
+        }
+
+        @keyframes zoom {
+            from {transform:scale(0)}
+            to {transform:scale(1)}
+        }
+
+        /* The Close Button */
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #bbb;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        /* 100% Image Width on Smaller Screens */
+        @media only screen and (max-width: 700px){
+            .modal-content {
+                width: 100%;
+            }
+        }
+    </style>
+    <script>
+        console.log("Images Initialized");
+        var modal = document.getElementById("ts0Modal");
+
+        var img = document.getElementById("ts0");
+        var modalImg = document.getElementById("img00");
+        var captionText = document.getElementById("caption0");
+        var clicked = false;
+        img.onclick = function(){
+            if (clicked) {
+                modal.style.display = "none";
+                clicked = false;
+                return;
+            }
+            else {
+                clicked = true;
+                modal.style.display = "block";
+                modalImg.src = "images/ts0.jpg";
+                captionText.innerHTML = "GruLeiRu T-Shirt"
+            }
+        }
+
+        var span = document.getElementsByClassName("close")[0];
+
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+    </script>
+    <script>
+        console.log("Images Initialized");
+        var modal = document.getElementById("ts1Modal");
+
+        var img = document.getElementById("ts1");
+        var modalImg = document.getElementById("img01");
+        var captionText = document.getElementById("caption1");
+        var clicked = false;
+        img.onclick = function(){
+            if (clicked) {
+                modal.style.display = "none";
+                clicked = false;
+                return;
+            }
+            else {
+                clicked = true;
+                modal.style.display = "block";
+                modalImg.src = "images/ts1.jpg";
+                captionText.innerHTML = "I Love HeFa T-Shirt"
+            }
+        }
+
+        var span = document.getElementsByClassName("close")[0];
+
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+    </script>
+</html>

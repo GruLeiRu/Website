@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>Adventskalender</title>
+  <style>
+
+    .overlay {
+      color: white;
+      font-size: 20px;
+      position: absolute;
+    }
+
+    .magnific-img {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .image-popup-vertical-fit {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.71);
+      border-radius: 15px;
+    }
+  </style>
+  <style>
+
+    .gg-lock {
+      box-sizing: border-box;
+      position: relative;
+      display: block;
+      transform: scale(var(--ggs,1));
+      width: 12px;
+      height: 11px;
+      border: 2px solid;
+      border-top-right-radius: 50%;
+      border-top-left-radius: 50%;
+      border-bottom: transparent;
+      margin-top: -12px;
+      scale: 3;
+      margin-left: 10px;
+      opacity: 0.5;
+    }
+
+    .gg-lock::after {
+      content: "";
+      display: block;
+      box-sizing: border-box;
+      position: absolute;
+      width: 16px;
+      height: 10px;
+      border-radius: 2px;
+      border: 2px solid transparent;
+      box-shadow: 0 0 0 2px;
+      left: -4px;
+      top: 9px
+    }
+  </style>
+</head>
+<body>
+  <div id="imgc"></div>
+  <script>
+    //window.location.href = "unreachable.html"
+    window.onload = function() {
+      var container = document.getElementById('imgc');
+      var today = new Date().getDate();
+      var imageDiv = document.createElement('div');
+      imageDiv.className = 'magnific-img';
+      // check if reihenfolge is already set
+      console.log(localStorage.getItem('reihenfolge'));
+        if (localStorage.getItem('reihenfolge') !== null) {
+            var reihenfolge = JSON.parse(localStorage.getItem('reihenfolge'));
+            var newReihenfolge = [];
+            for (let i = 0; i < reihenfolge.length; i++) {
+            if (reihenfolge[i] <= today) {
+                newReihenfolge.push(reihenfolge[i]);
+            }
+            }
+            reihenfolge = newReihenfolge;
+            for (let i = 0; i < reihenfolge.length; i++) {
+            var imageLink = document.createElement('a');
+            imageLink.className = 'image-popup-vertical-fit';
+            //imageLink.href = `./images/public/advent/${reihenfolge[i]}.jpg`;
+            imageLink.title = '';
+
+            var image = document.createElement('img');
+            image.src=`./images/public/advent/preview/preview${reihenfolge[i]}.jpg`;
+            image.alt = '';
+            image.style.objectFit = 'cover';
+            image.style.width = '300px';
+            image.style.height = '300px';
+            image.style.borderRadius = '15px';
+
+            var overlay = document.createElement('div');
+            overlay.className = 'overlay';
+            overlay.textContent = i + 1;
+            overlay.style.fontSize = '150px';
+
+            overlay.style.fontFamily = 'sans-serif';
+            overlay.style.textShadow = '0 0 10px rgba(243, 236, 236, 0.71)';
+            overlay.style.fontWeight = 'bold';
+            overlay.style.textAlign = 'center';
+            overlay.style.width = '300px';
+            overlay.style.height = '300px';
+            overlay.style.borderRadius = '15px';
+            overlay.style.display = 'flex';
+            overlay.style.justifyContent = 'center';
+            overlay.style.alignItems = 'center';
+
+            imageLink.appendChild(image);
+            imageLink.appendChild(overlay);
+            imageDiv.appendChild(imageLink);
+
+            if (getClicked(i + 1) == true) {
+              image.src = `./images/public/advent/2023/${i + 1}.jpg`;
+            }
+
+            if (i + 1 > today) {
+              overlay.style.fontFamily = 'sans-serif';
+              overlay.style.color = 'grey';
+              overlay.style.opacity = '0.5';
+              overlay.style.textShadow = '0 0 10px black';
+              overlay.style.fontWeight = 'bold';
+              overlay.style.textAlign = 'center';
+              overlay.style.borderRadius = '15px';
+              overlay.style.backgroundColor = 'white';
+              overlay.style.display = 'flex';
+              overlay.style.justifyContent = 'center';
+              overlay.style.alignItems = 'center';
+
+              // lock icon
+              var lock = document.createElement('i');
+              lock.className = 'gg-lock';
+              lock.style.position = 'absolute';
+              lock.style.top = '85%';
+              lock.style.left = '50%';
+              lock.style.transform = 'translate(-50%, -50%)';
+              lock.style.color = 'grey';
+              lock.style.opacity = '1';
+              lock.style.textShadow = '0 0 10px black';
+
+              overlay.appendChild(lock);
+            }
+
+
+            (function(i, image, imageLink) {
+              if (i + 1 <= today) {
+                var clicked = false;
+                imageLink.addEventListener('click', function(event) {
+                  event.preventDefault();
+                  if (!clicked && getClicked(i + 1) == false) {
+                    image.src = `./images/public/advent/2024/${i + 1}.jpg`;
+                    clicked = true;
+                    pushClicked(i + 1);
+                  } else {
+                    // Create a new div element for the popup
+                    var popup = document.createElement('div');
+                    popup.style.position = 'fixed';
+                    popup.style.width = '100%';
+                    popup.style.height = '100%';
+                    popup.style.top = '0';
+                    popup.style.left = '0';
+                    popup.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+                    popup.style.display = 'flex';
+                    popup.style.justifyContent = 'center';
+                    popup.style.alignItems = 'center';
+
+                    // Create a new image element for the popup
+                    var popupImage = document.createElement('img');
+                    popupImage.src = image.src;
+                    popupImage.style.maxWidth = '90%';
+                    popupImage.style.maxHeight = '90%';
+
+                    // Append the image to the popup and the popup to the body
+                    popup.appendChild(popupImage);
+                    document.body.appendChild(popup);
+
+                    // Add an event listener to remove the popup when clicked
+                    popup.addEventListener('click', function() {
+                      document.body.removeChild(popup);
+                    });
+                  }
+                });
+              }
+            })(i, image, imageLink);
+
+            container.appendChild(imageDiv);
+            }
+        } else {
+          reihenfolge = []
+          for (let day = 1; day <= 24; day++) {
+
+            var imageLink = document.createElement('a');
+            imageLink.className = 'image-popup-vertical-fit';
+            //imageLink.href = `./images/public/advent/${day}.jpg`;
+            imageLink.title = '';
+
+            var image = document.createElement('img');
+            var randInt = Math.floor(Math.random() * 8) + 1;
+            reihenfolge.push(randInt);
+            image.src=`./images/public/advent/preview/preview${randInt}.jpg`;
+            image.alt = '';
+            image.style.objectFit = 'cover';
+            image.style.width = '200px';
+            image.style.height = '200px';
+            image.style.borderRadius = '15px';
+
+            var overlay = document.createElement('div');
+            overlay.className = 'overlay';
+            overlay.textContent = day;
+            overlay.style.fontSize = '100px';
+
+            overlay.style.fontFamily = 'sans-serif';
+            overlay.style.textShadow = '0 0 10px rgba(243, 236, 236, 0.71)';
+            overlay.style.fontWeight = 'bold';
+            overlay.style.textAlign = 'center';
+            overlay.style.width = '200px';
+            overlay.style.height = '200px';
+            overlay.style.borderRadius = '15px';
+            overlay.style.display = 'flex';
+            overlay.style.justifyContent = 'center';
+            overlay.style.alignItems = 'center';
+
+            if (getClicked(day) == true) {
+              image.src = `./images/public/advent/2024/${day}.jpg`;
+            }
+
+            if (day > today) {
+              overlay.style.fontFamily = 'sans-serif';
+              overlay.style.color = 'grey';
+              overlay.style.opacity = '0.5';
+              overlay.style.textShadow = '0 0 10px black';
+              overlay.style.fontWeight = 'bold';
+              overlay.style.textAlign = 'center';
+              overlay.style.width = '200px';
+              overlay.style.height = '200px';
+              overlay.style.borderRadius = '15px';
+              overlay.style.backgroundColor = 'white';
+              overlay.style.display = 'flex';
+              overlay.style.justifyContent = 'center';
+              overlay.style.alignItems = 'center';
+
+              // lock icon
+              var lock = document.createElement('i');
+              lock.className = 'gg-lock';
+              lock.style.position = 'absolute';
+              lock.style.top = '85%';
+              lock.style.left = '50%';
+              lock.style.transform = 'translate(-50%, -50%)';
+              lock.style.color = 'grey';
+              lock.style.opacity = '1';
+              lock.style.textShadow = '0 0 10px black';
+
+              overlay.appendChild(lock);
+            }
+
+            imageLink.appendChild(image);
+            imageLink.appendChild(overlay);
+            imageDiv.appendChild(imageLink);
+
+            (function(day, image, imageLink) {
+              if (day  <= today) {
+                var clicked = false;
+                imageLink.addEventListener('click', function(event) {
+                  event.preventDefault();
+                  if (!clicked && getClicked(day) == false) {
+                    image.src = `./images/public/advent/2023/${day}.jpg`;
+                    clicked = true;
+                    pushClicked(day);
+                  } else {
+                    // Create a new div element for the popup
+                    var popup = document.createElement('div');
+                    popup.style.position = 'fixed';
+                    popup.style.width = '100%';
+                    popup.style.height = '100%';
+                    popup.style.top = '0';
+                    popup.style.left = '0';
+                    popup.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+                    popup.style.display = 'flex';
+                    popup.style.justifyContent = 'center';
+                    popup.style.alignItems = 'center';
+
+                    // Create a new image element for the popup
+                    var popupImage = document.createElement('img');
+                    popupImage.src = image.src;
+                    popupImage.style.maxWidth = '90%';
+                    popupImage.style.maxHeight = '90%';
+
+                    // Append the image to the popup and the popup to the body
+                    popup.appendChild(popupImage);
+                    document.body.appendChild(popup);
+
+                    // Add an event listener to remove the popup when clicked
+                    popup.addEventListener('click', function() {
+                      document.body.removeChild(popup);
+                    });
+                  }
+                });
+              }
+            })(day, image, imageLink);
+
+            container.appendChild(imageDiv);
+          }
+          localStorage.setItem('reihenfolge', JSON.stringify(reihenfolge));
+        }
+
+
+    };
+    function pushClicked(day) {
+      var clicked = JSON.parse(localStorage.getItem('clicked'));
+      if (clicked === null) {
+        clicked = [];
+      }
+      clicked.push(day);
+      localStorage.setItem('clicked', JSON.stringify(clicked));
+    }
+    function getClicked(day) {
+      var clicked = JSON.parse(localStorage.getItem('clicked'));
+      if (clicked === null) {
+        return false
+      } else {
+        return clicked.includes(day);
+      }
+    }
+  </script>
+</body>
+</html>

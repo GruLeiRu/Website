@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <label id="token">
+        Token will appear here...
+    </label>
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+        import { getMessaging, getToken } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-messaging.js";
+        const firebaseConfig = {
+            apiKey: "AIzaSyD1WtzGBJFnt_I5EoHWIx992J4xHI8Iw5s",
+            authDomain: "gruleiru-5e417.firebaseapp.com",
+            projectId: "gruleiru-5e417",
+            storageBucket: "gruleiru-5e417.appspot.com",
+            messagingSenderId: "943733082073",
+            appId: "1:943733082073:web:47a68cfed2f21b9bdebbc8",
+            measurementId: "G-9GD58FY0PG"
+        };
+        const app = initializeApp(firebaseConfig);
+        const messaging = getMessaging();
+        getToken(messaging, { vapidKey: 'BD4qr0H_qH2T1h3KGVhOL9CB3YBRqVuzNqJnbk9osDRaqkCXf5hAb5oeU7G-xe8BL9vPGz_SHuOd-G3S3aRv4y8' }).then((currentToken) => {
+            if (currentToken) {
+                console.log(currentToken);
+                document.getElementById('token').innerText = currentToken;
+            } else {
+                console.log('No registration token available. Request permission to generate one.');
+            }
+        }).catch((err) => {
+            console.log('An error occurred while retrieving token. ', err);
+        });
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('firebase-messaging-sw.js')
+                .then(registration => {
+                    console.log('Service worker registered:', registration);
+                })
+                .catch(err => {
+                    console.error('Service worker registration failed:', err);
+                });
+        } else {
+            console.warn('Service workers are not supported in this browser.');
+        }
+
+    </script>
+</body>
+</html>

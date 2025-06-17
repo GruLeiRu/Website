@@ -1,0 +1,337 @@
+<!doctype html>
+<html lang="de">
+  <link rel="icon" href="images/favicon.ico" />
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-YDZ6CT5KD4"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+
+  </script>
+  <meta charset="utf-8">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="fonts/icomoon/style.css">
+
+  <link rel="stylesheet" href="css/owl.carousel.min.css">
+
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+
+  <link rel="stylesheet" href="css/style.css">
+
+  <script src="js/settingManager.js"></script>
+
+  <title>Panel</title>
+</head>
+
+<body>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+  <div id="mainbar"
+    style="line-height: 53px; height:60px; width: 95%; background-color: rgb(255, 255, 255); margin: auto; margin-top: 15px; border-radius: 10px; box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.1);">
+    <a href="https://www.gruleiru.de/main.html"><img src="images/ente.png" style="height:50px; margin-left: 10px;" class="ente" id="ente"></a>
+    <span style="line-height: normal; display: inline-block; vertical-align: middle; margin-left: 10px;"><a
+        style="color: black;" id="reminder" href="https://www.google.com">Termine</a></span>
+    <!--span style="line-height: normal; display: inline-block; vertical-align: middle; margin-left: 20px;"><a style="color: black;" id="pictures" href="https://gruleiru.de">Fotoalbum</a></span>-->
+    <!--span style="line-height: normal; display: inline-block; vertical-align: middle; margin-left: 20px;"><a style="color: black;" id="settings" href="https://www.google.com">Einstellungen</a></span>-->
+    <span style="line-height: normal; display: inline-block; vertical-align: middle; margin-left: 20px;"><a
+        style="color: black;" id="invites" href="https://www.google.com">Support</a></span>
+    <span style="line-height: normal; display: inline-block; vertical-align: middle; margin-left: 20px;"><a
+        style="color: black;" id="hefa" href="https://www.google.com">HeFa</a></span>
+    <div id="drop" class="drop"
+      style="height: 60px; width: 70px; border-radius: 10px; background-color: rgb(255, 255, 255); box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.1); float: right;">
+      <a id="more"><img src="images/more.png"
+          style="height: 30px; float: right; margin-top: 13px; margin-right: 20px;"></a>
+      <a href="https://www.google.com" id="settings"><img src="images/set.png"
+          style="height: 30px; float: right; margin-top: 20px; margin-right: 20px;"></a>
+      <a onclick="Logout('temp')" id="logout" class="logout"><img src="images/logout.png"
+          style="height: 30px; float: right; margin-top: 20px; margin-right: 19px;"></a>
+    </div>
+
+  </div>
+  <script>
+    ext = "160"
+    function mobile() {
+      var userAgent = navigator.userAgent;
+      if (userAgent.match(/Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i)) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+    if (mobile() == true) {
+      ext = "205"
+      document.getElementById("mainbar").innerHTML = `
+      <a href="https://www.gruleiru.de/main.html"><img src="images/ente.png" style="height:50px; margin-left: 10px;" class="ente" id="ente"></a>
+    <span style="line-height: normal; display: inline-block; vertical-align: middle; margin-left: 10px;"><a
+        style="color: black;" id="reminder" href="https://www.google.com">Termine</a></span>
+    <!--span style="line-height: normal; display: inline-block; vertical-align: middle; margin-left: 20px;"><a style="color: black;" id="pictures" href="https://gruleiru.de">Fotoalbum</a></span>-->
+    <!--span style="line-height: normal; display: inline-block; vertical-align: middle; margin-left: 20px;"><a style="color: black;" id="settings" href="https://www.google.com">Einstellungen</a></span>-->
+    <span style="line-height: normal; display: inline-block; vertical-align: middle; margin-left: 20px;"><a
+        style="color: black;" id="hefa" href="https://www.google.com">HeFa</a></span>
+    <a href="https://www.dropbox.com/scl/fo/ka6jnvb837dyuwkdi0w1s/h?dl=0&rlkey=giihr4pwablkueo3dodj2ry9u" id="dropbox" class="dropbox"><img src="images/dropbox.png"
+          style="height: 30px; margin-left: 19px;"></a>
+    <div id="drop" class="drop"
+      style="height: 60px; width: 70px; border-radius: 10px; background-color: rgb(255, 255, 255); box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.1); float: right;">
+      <a id="more"><img src="images/more.png"
+          style="height: 30px; float: right; margin-top: 13px; margin-right: 20px;"></a>
+      <a href="https://www.google.com" id="settings"><img src="images/set.png"
+          style="height: 30px; float: right; margin-top: 20px; margin-right: 20px;"></a>
+      <a href="https://www.google.com" id="invites" class="logout"><img src="images/invitation.png"
+          style="height: 30px; float: right; margin-top: 20px; margin-right: 20px;"></a>
+      <a onclick="Logout('temp')" id="logout" class="logout"><img src="images/logout.png"
+          style="height: 30px; float: right; margin-top: 20px; margin-right: 19px;"></a>
+      `
+    } else {
+      document.getElementById("mainbar").innerHTML = `<a href="https://www.gruleiru.de/main.html"><img src="images/ente.png" style="height:50px; margin-left: 10px;" class="ente" id="ente"></a>
+    <span style="line-height: normal; display: inline-block; vertical-align: middle; margin-left: 10px;"><a
+        style="color: black;" id="reminder" href="https://www.google.com">Termine</a></span>
+    <!--span style="line-height: normal; display: inline-block; vertical-align: middle; margin-left: 20px;"><a style="color: black;" id="pictures" href="https://gruleiru.de">Fotoalbum</a></span>-->
+    <!--span style="line-height: normal; display: inline-block; vertical-align: middle; margin-left: 20px;"><a style="color: black;" id="settings" href="https://www.google.com">Einstellungen</a></span>-->
+    <span style="line-height: normal; display: inline-block; vertical-align: middle; margin-left: 20px;"><a
+        style="color: black;" id="invites" href="https://www.google.com">Support</a></span>
+    <span style="line-height: normal; display: inline-block; vertical-align: middle; margin-left: 20px;"><a
+        style="color: black;" id="hefa" href="https://www.google.com">HeFa</a></span>
+    <span style="line-height: normal; display: inline-block; vertical-align: middle; margin-left: 20px;"><a
+        style="color: black;" id="db" href="https://www.dropbox.com/scl/fo/ka6jnvb837dyuwkdi0w1s/h?dl=0&rlkey=giihr4pwablkueo3dodj2ry9u">Dropbox</a></span>
+    <div id="drop" class="drop"
+      style="height: 60px; width: 70px; border-radius: 10px; background-color: rgb(255, 255, 255); box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.1); float: right;">
+      <a id="more"><img src="images/more.png"
+          style="height: 30px; float: right; margin-top: 13px; margin-right: 20px;"></a>
+      <a href="https://www.google.com" id="settings"><img src="images/set.png"
+          style="height: 30px; float: right; margin-top: 20px; margin-right: 20px;"></a>
+      <a onclick="Logout('temp')" id="logout" class="logout"><img src="images/logout.png"
+          style="height: 30px; float: right; margin-top: 20px; margin-right: 19px;"></a>`
+    }
+    animating = false
+    animatingout = false
+    $(".drop").animate({
+      height: '60'
+    })
+    $('.drop').hover(function () {
+      if (animatingout == true) {
+        animating = true
+        $(this).stop()
+        $(this).animate({
+          height: ext
+        }, function () {
+          animatingout = false
+          animating = true
+        })
+      }
+
+
+      if (animating == false) {
+        animating = true
+        $(this).animate({
+          height: ext
+        }, function () {
+          animating = false
+        })
+      }
+    })
+    $('.drop').mouseleave(function () {
+      animatingout = true
+      $(this).stop()
+      $(this).animate({
+        height: '60'
+      }, function () {
+        animatingout = false
+        animating = false
+      })
+    })
+  </script>
+
+  <div class="content">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-md-6 contents">
+          <div class="row justify-content-center">
+            <div class="col-md-12">
+              <div class="form-block" id="block">
+                <div class="mb-4">
+                  <h3>HeFa <strong class="nwtxt">Anmeldungen</strong></h3>
+                  <script>
+                    function download_table_as_csv(table_id, separator = ';') {
+                      // Select rows from table_id
+                      var rows = document.querySelectorAll('table#' + table_id + ' tr');
+                      // Construct csv
+                      var csv = [];
+                      for (var i = 0; i < rows.length; i++) {
+                        var row = [], cols = rows[i].querySelectorAll('td, th');
+                        for (var j = 0; j < cols.length; j++) {
+                          // Clean innertext to remove multiple spaces and jumpline (break csv)
+                          var data = cols[j].innerText.replace(/(\r\n|\n|\r)/gm, '').replace(/(\s\s)/gm, ' ')
+                          // Escape double-quote with double-double-quote
+                          data = data.replace(/"/g, '""');
+                          // If the data is a phone number (you can adjust this check as needed)
+                          if (data.match(/^\d+$/)) {
+                            // Prepend a single quote
+                            data = "'" + data;
+                          }
+                          // Push escaped string
+                          row.push('"' + data + '"');
+                        }
+                        csv.push(row.join(separator));
+                      }
+                      var csv_string = csv.join('\n');
+                      // Encode csv_string in UTF-8
+                      var csv_string_encoded = encodeURIComponent(csv_string);
+                      // Download it
+                      var filename = 'export_' + table_id + '_' + new Date().toLocaleDateString() + '.csv';
+                      var link = document.createElement('a');
+                      link.style.display = 'none';
+                      link.setAttribute('target', '_blank');
+                      // Use data:text/csv;charset=utf-8,%EF%BB%BF to specify UTF-8 encoding
+                      link.setAttribute('href', 'data:text/csv;charset=utf-8,%EF%BB%BF' + csv_string_encoded);
+                      link.setAttribute('download', filename);
+                      document.body.appendChild(link);
+                      link.click();
+                      document.body.removeChild(link);
+                    }
+                  </script>
+
+                  <a id="stats">
+                    <span>Statistiken</span>
+                  </a>
+                  <br>
+                  <div class="switchBox">
+                    <span class="switchText">Anmeldungen erlauben</span>
+                    <label class="switch">
+                      <input type="checkbox" id="allowRegister">
+                      <span class="slider round"></span>
+                    </label>
+                  </div>
+                  <div class="switchBox">
+                    <span class="switchText">Fortschritt anzeigen</span>
+                    <label class="switch">
+                      <input type="checkbox" id="progressSwitch">
+                      <span class="slider round"></span>
+                    </label>
+                  </div>
+                  <script>
+                    const HttpPublicSettings = new XMLHttpRequest();
+                    const urlPublicSettings='https://regapi.gruleiru.de/publicSettings';
+                    HttpPublicSettings.open("GET", urlPublicSettings);
+                    HttpPublicSettings.send();
+                    HttpPublicSettings.onload = (e) => {
+                      response = JSON.parse(HttpPublicSettings.responseText);
+                      console.log(response["settings"])
+                      if (response["error"] == "ok"){
+                        if (response["settings"]["openRegistry"] == "1") {
+                          document.getElementById("allowRegister").checked = true
+                        }
+                        if (response["settings"]["showProgress"] == "1") {
+                          document.getElementById("progressSwitch").checked = true
+                        }
+                      }
+                    }
+                    document.getElementById("progressSwitch").addEventListener('change', function() {
+                      let newValue = Number(this.checked);
+                      changeSetting('showProgress', newValue, session);
+                    });
+                    document.getElementById("allowRegister").addEventListener('change', function() {
+                      let newValue = Number(this.checked);
+                      changeSetting('openRegistry', newValue, session);
+                    });
+                  </script>
+
+
+                </div>
+
+                <div id="stfContainer"></div>
+                <br>
+                <button class="btn btn-pill text-white btn-block btn-primary" onclick="download_table_as_csv('table', ';')">Herunterladen</button>
+
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <style>
+    .switchBox {
+      line-height: 20px;
+    }
+    .switchText {
+      font-size: 17px;
+      margin-right: 10px;
+    }
+    /* The switch - the box around the slider */
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 45px;
+      height: 20px;
+    }
+
+    /* Hide default HTML checkbox */
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    /* The slider */
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      -webkit-transition: .4s;
+      transition: .4s;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 12px;
+      width: 12px;
+      left: 4px;
+      bottom: 4px;
+      background-color: white;
+      -webkit-transition: .4s;
+      transition: .4s;
+    }
+
+    input:checked + .slider {
+      background-color: #38d39f;
+    }
+
+    input:focus + .slider {
+      box-shadow: 0 0 1px #38d39f;
+    }
+
+    input:checked + .slider:before {
+      -webkit-transform: translateX(26px);
+      -ms-transform: translateX(26px);
+      transform: translateX(26px);
+    }
+
+    /* Rounded sliders */
+    .slider.round {
+      border-radius: 34px;
+    }
+
+    .slider.round:before {
+      border-radius: 50%;
+    }
+  </style>
+  <script src="js/hefa.js"></script>
+
+</body>
+
+</html>

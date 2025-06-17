@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="fonts/icomoon/style.css">
+
+    <link rel="stylesheet" href="css/owl.carousel.min.css">
+
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+
+
+    <link rel="stylesheet" type="text/css" href="css/magnific-popup.css">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js">
+    </script>
+    <script>
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        const redirect = urlParams.get('redirect')
+        
+
+        const Http = new XMLHttpRequest();
+        var request = new XMLHttpRequest();
+        request.open("GET", "./down/reason.json", false);
+        request.send(null);
+        var jsonData = JSON.parse(request.responseText);
+        const qString = window.location.search;
+        const uParams = new URLSearchParams(qString);
+        const r = uParams.get('redirect')
+        if (r != "false") {
+            if (jsonData["reason"] == "none") {
+
+            } else {
+                location.href = jsonData["reason"] + ".html"
+            }
+
+        }
+
+        function getMachineId() {
+
+            let machineId = localStorage.getItem('MachineId');
+
+            if (!machineId) {
+                machineId = crypto.randomUUID();
+                localStorage.setItem('MachineId', machineId);
+            }
+
+            return machineId;
+        }
+        $.getJSON("https://api.ipify.org?format=json", function(data) {
+
+            ip = data.ip
+            const url = 'https://regapi.gruleiru.de/bipc?ip=' + ip + '&&mid=' + getMachineId();
+            Http.open("GET", url);
+            Http.send();
+            Http.onload = (e) => {
+                response = JSON.parse(Http.responseText);
+                if (response["banned"] == "1") {
+                    location.href = "https://www.gruleiru.de/pban"
+                }
+            }
+        })
+
+    </script>
+</head>
+
+<body>
+
+<section class="sky">
+</section>
+
+<style>
+
+    @import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Titan+One&display=swap');
+
+    .bannerText {
+        font-family: 'Permanent Marker', cursive;
+        font-family: 'Titan One', sans-serif;
+        color: rgba(255, 255, 255, 0.88);
+    }
+
+    body, html {
+        height: 100%;
+        color: #FFF;
+        /*background-color: #dbdee7;*/
+        background-color: #f8fafb;
+    }
+
+    .sky {
+        pointer-events: none;
+        position: absolute;
+        height: 100%;
+        width: 100vw;
+        background-color: transparent;
+        color: #FFF;
+        display: block;
+    }
+</style>
+<script>
+    (function () {
+
+        var COUNT = 0;
+        var masthead = document.querySelector('.sky');
+        var canvas = document.createElement('canvas');
+        var ctx = canvas.getContext('2d');
+        var width = masthead.clientWidth;
+        var height = masthead.clientHeight;
+        var i = 0;
+        var active = false;
+
+        function onResize() {
+            width = masthead.clientWidth;
+            height = masthead.clientHeight;
+            canvas.width = width;
+            canvas.height = height;
+            ctx.fillStyle = '#FFF';
+
+            var wasActive = active;
+            active = width > 300;
+
+            if (!wasActive && active)
+                requestAnimFrame(update);
+        }
+
+        var Snowflake = function () {
+            this.x = 0;
+            this.y = 0;
+            this.vy = 0;
+            this.vx = 0;
+            this.r = 0;
+
+            this.reset();
+        }
+
+        Snowflake.prototype.reset = function() {
+            this.x = Math.random() * width;
+            this.y = Math.random() * -height;
+            this.vy = 1 + Math.random() * 3;
+            this.vx = 0.5 - Math.random();
+            this.r = 1 + Math.random() * 2;
+            this.o = 0.5 + Math.random() * 0.5;
+        }
+
+        canvas.style.position = 'absolute';
+        canvas.style.left = canvas.style.top = '0';
+
+        var snowflakes = [], snowflake;
+        for (i = 0; i < COUNT; i++) {
+            snowflake = new Snowflake();
+            snowflake.reset();
+            snowflakes.push(snowflake);
+        }
+
+        function update() {
+
+            ctx.clearRect(0, 0, width, height);
+
+            if (!active)
+                return;
+
+            for (i = 0; i < COUNT; i++) {
+                snowflake = snowflakes[i];
+                snowflake.y += snowflake.vy;
+                snowflake.x += snowflake.vx;
+
+                ctx.globalAlpha = snowflake.o;
+                ctx.beginPath();
+                ctx.arc(snowflake.x, snowflake.y, snowflake.r, 0, Math.PI * 2, false);
+                ctx.closePath();
+                ctx.fill();
+
+                if (snowflake.y > height) {
+                    snowflake.reset();
+                }
+            }
+
+            requestAnimFrame(update);
+        }
+
+        // shim layer with setTimeout fallback
+        window.requestAnimFrame = (function(){
+            return  window.requestAnimationFrame       ||
+                window.webkitRequestAnimationFrame ||
+                window.mozRequestAnimationFrame    ||
+                function( callback ){
+                    window.setTimeout(callback, 1000 / 60);
+                };
+        })();
+
+        onResize();
+        window.addEventListener('resize', onResize, false);
+
+        masthead.appendChild(canvas);
+    })();
+</script>
+
+<script src="js/jquery-3.3.1.min.js"></script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Dosis:wght@600&family=Permanent+Marker&family=Titan+One&display=swap');
+    </style>
+
+    <script type="text/javascript" src="js/jquery.magnific-popup.min.js"></script>
+    <script src="js/foto.js"></script>
+
+    <div id="mainbar"
+        style="line-height: 53px; height:60px; width: 95%; background-color: rgb(255, 255, 255); margin: auto; margin-top: -100px; border-radius: 10px; box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.1); margin-bottom: 50px;">
+        <img src="images/ente.png" style="height:50px; margin-left: 10px; margin-top: 5px; " class="ente" id="ente">
+
+        <span style="line-height: normal; display: inline-block; vertical-align: middle; margin-left: 10px; font-family: 'Dosis', sans-serif;"><a
+                style="color: black;" id="reminder">GruLeiRu Website</a></span>
+        <a href="https://www.gruleiru.de/index">
+            <img src="images/login.png" style="height:40px; margin-right: 10px; margin-top: 10px; float: right" class="ente" id="login">
+        </a>
+        <a onclick="changeTheme()">
+            <img src="images/dark.png" style="height:40px; margin-right: 10px; margin-top: 10px; float: right" class="ente" id="theme">
+        </a>
+
+    </div>
+    <a href="anmeldung" style="display: none" id="progressBar">
+        <div style="line-height: 45px; text-align: center; position: relative; width: 80%; margin-left: 10%; border-radius: 10px;" class="blob">
+            <span id="registrySpan" style="color: white; position: absolute; text-align: center; margin-left: -93px; font-family: 'Dosis', sans-serif;">Nur noch 2 HeFa Plätze frei!</span>
+            <div style="width: 100%; margin-left: 0%; background-color: lightgray; height: 50px; margin-bottom: 20px; border-radius: 10px" >
+                <div class="hefaStatus" style="height: 50px; background-color: red; border-bottom-left-radius: 10px; border-top-left-radius: 10px"></div>
+            </div>
+        </div>
+    </a>
+
+
+    <a href="https://www.gruleiru.de/anmeldung" id="block1" style="display: block">
+        <div id="image-container2" class="image-container"
+            style="background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.767)), url('images/public/hefa25.jpeg'), url('images/public/hefa25.jpeg');height: 100px; width: 80%; background-color: white; margin: auto; margin-bottom: 25px; box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2); border-radius: 10px; display: flex; justify-content: center; align-items: center;"> <!--images/public/hefa/banner.jpg / low-banner.jpg-->
+            <span class="bannerText" style="font-size: 55px; margin-top: -200px">Hefa 25</span></span> <!--font-size: 40px; -->
+        </div>
+    </a>
+
+    <script>
+        const HttpHefaRegistry = new XMLHttpRequest();
+        const urlHefaReg='https://regapi.gruleiru.de/hefaRegistries';
+        HttpHefaRegistry.open("GET", urlHefaReg);
+        HttpHefaRegistry.send();
+        HttpHefaRegistry.onload = (e) => {
+            response = JSON.parse(HttpHefaRegistry.responseText);
+            if (response["error"] == "ok"){
+                if (response["registries"] >= 89) {
+                    document.getElementById("registrySpan").innerHTML = "HeFa 2025 ist ausgebucht!"
+                    let hefaStatusElement = document.getElementsByClassName("hefaStatus")[0];
+                    let widthValue = "100%"
+                    hefaStatusElement.animate([
+                        { width: hefaStatusElement.style.width },
+                        { width: widthValue }
+                    ], {
+                        duration: 2000,
+                        fill: 'forwards'
+                    });
+                    hefaStatusElement.style.borderRadius = "10px"
+                } else {
+                    document.getElementById("registrySpan").innerHTML = "Nur noch " + (89 - response["registries"]) + " HeFa Plätze frei!"
+                    let hefaStatusElement = document.getElementsByClassName("hefaStatus")[0];
+                    let widthValue = response["registries"] / 89 * 100 + "%"
+                    hefaStatusElement.animate([
+                        { width: hefaStatusElement.style.width },
+                        { width: widthValue }
+                    ], {
+                        duration: 1000,
+                        fill: 'forwards'
+                    });
+                }
+            }
+        }
+
+        const HttpPublicSettings = new XMLHttpRequest();
+        const urlPublicSettings='https://regapi.gruleiru.de/publicSettings';
+        HttpPublicSettings.open("GET", urlPublicSettings);
+        HttpPublicSettings.send();
+        HttpPublicSettings.onload = (e) => {
+            response = JSON.parse(HttpPublicSettings.responseText);
+            console.log(response["settings"])
+            if (response["error"] == "ok"){
+                if (response["settings"]["openRegistry"] == "1") {
+                    document.getElementById("block1").style.display = "block"
+                }
+                if (response["settings"]["showProgress"] == "1") {
+                    document.getElementById("progressBar").style.display = "block"
+                }
+            }
+        }
+        const checkURL = "https://cd.gruleiru.de"
+        Http.open("GET", checkURL);
+        Http.send();
+        Http.onload = (e) => {
+            response = JSON.parse(Http.responseText);
+            monthsL = response["monthsLeft"]
+            daysL = response["daysLeft"]
+            auth = response["auth"]
+            if (auth == "1") {
+                document.getElementById("block1").style.display = "block"
+            }
+        }
+
+    </script>
+
+    <a href="https://www.gruleiru.de/public">
+        <div id="image-container3" class="image-container"
+            style="background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.767)), url('images/public/main/termine.jpg'), url('images/public/main/termine-low.jpg');height: 100px; width: 80%; background-color: white; margin: auto; margin-bottom: 25px; box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2); border-radius: 10px; display: flex; justify-content: center; align-items: center;">
+            <span class="bannerText" style="font-size: 40px;">Termine</span>
+            <span class="indicator" id="indicator">0</span>
+        </div>
+    </a>
+    <script>
+        const HttpPublic = new XMLHttpRequest();
+        const url='https://regapi.gruleiru.de/public';
+        HttpPublic.open("GET", url);
+        HttpPublic.send();
+        HttpPublic.onload = (e) => {
+            response = JSON.parse(HttpPublic.responseText);
+            document.getElementById("indicator").innerHTML = response["dates"].length
+            document.getElementById("indicator").style.display = "block"
+        }
+
+
+    </script>
+    <a onclick="showPopup()">
+        <div id="image-container6" class="image-container"
+            style="background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.767)), url('images/public/main/banner.about.jpg'), url('images/public/main/low-banner.about.jpg');height: 100px; width: 80%; background-color: white; margin: auto; margin-bottom: 25px; box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2); border-radius: 10px; display: flex; justify-content: center; align-items: center;">
+            <span class="bannerText" style="font-size: 40px;">Das sind wir</span>
+        </div>
+    </a>
+    <a  href="https://www.gruleiru.de/foto">
+        <div onclick="fadeoutIcons()" id="image-container" class="image-container"
+             style="background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.767)), url('images/public/main/banner.foto.jpg'), url('images/public/main/low-banner.foto.jpg'); height: 100px; width: 80%; background-color: white; margin: auto; margin-bottom: 25px; box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2); border-radius: 10px; display: flex; justify-content: center; align-items: center;">
+            <span class="bannerText" style="font-size: 40px;">Fotoalbum</span>
+        </div>
+    </a>
+<a  href="https://www.gruleiru.de/newsletter">
+    <div onclick="fadeoutIcons()" id="image-container7" class="image-container"
+         style="background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.767)), url('images/public/main/newsletter.jpg'), url('images/public/main/newsletter-low.jpg'); height: 100px; width: 80%; background-color: white; margin: auto; margin-bottom: 25px; box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2); border-radius: 10px; display: flex; justify-content: center; align-items: center;">
+        <span class="bannerText" style="font-size: 40px;">Newsletter</span>
+    </div>
+</a>
+    <script>
+        function fadeoutIcons() {
+            $("#login").animate({
+                opacity: '0',
+                width: '0',
+                height: '0',
+                marginTop: '30px',
+                marginRight: '30px',
+            }, 100)
+            $("#theme").animate({
+                opacity: '0',
+                width: '0',
+                height: '0',
+                marginTop: '30px',
+                marginRight: '30px',
+            }, 100)
+        }
+    </script>
+
+    <a href="https://www.gruleiru.de/advent" id="beta-container1" style="display: none; ">
+        <div onclick="fadeoutIcons()" id="image-container5" class="image-container"
+             style="background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.767)), url('images/public/main/advent.jpg'), url('images/public/main/advent-low.jpg'); height: 100px; width: 80%; background-color: white; margin: auto; margin-bottom: 25px; box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.1); border-radius: 10px; display: flex; justify-content: center; align-items: center;">
+            <span class="bannerText" style="font-size: 40px;">Advent</span>
+        </div>
+    </a>
+
+<!--    <a href="https://www.paypal.com/donate/?hosted_button_id=TJBKVAXQVRSKW" id="block0">-->
+<!--        <div id="image-container7" class="image-container"-->
+<!--             style="background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.767)),url('images/public/main/spenden.png'), url('images/public/main/spenden.png');height: 400px; width: 80%; background-color: white; margin: auto; margin-bottom: 25px; box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.1); border-radius: 10px; display: flex; justify-content: center; align-items: center;">-->
+<!--            <span class="bannerText" style="font-size: 40px; color: white;">Unterstützung</span>-->
+<!--        </div>-->
+<!--    </a>-->
+<!--    <a href="https://www.gruleiru.de/unreachable" id="beta-container3">-->
+<!--        <div id="image-container8" class="image-container"-->
+<!--             style="background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.767)), url('images/public/main/spenden.png'), url('images/public/main/low-spenden.png');height: 400px; width: 80%; background-color: white; margin: auto; margin-bottom: 25px; box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.1); border-radius: 10px; display: flex; justify-content: center; align-items: center;">-->
+<!--            <span class="bannerText" style="font-size: 40px; color: white;">Fanshop (</span><img src="images/beta.png" style="height: 40px; color: white;"><span style="font-size: 40px; color: white">)</span>-->
+<!--        </div>-->
+<!--    </a>-->
+
+<!--    </div>-->
+
+    <div class="popup" onclick="showPopup()">
+        <video class="popuptext" id="VidPopup" style="width:90%; border-radius: 10px; box-shadow: rgba(12,12,12,0.5) 0 0 20px 10px;" >
+            <source src="images/public/main/about.mp4" type="video/mp4">
+        </video>
+    </div>
+
+    <script>
+        function showPopup() {
+            var popup = document.getElementById("VidPopup");
+            popup.classList.toggle("show");
+
+            if (popup.paused){
+                popup.play();
+            }
+            else{
+                popup.pause();
+            }
+
+        }
+
+        function mobile() {
+            var userAgent = navigator.userAgent;
+            if (userAgent.match(/Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i)) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+        if (mobile() == true) {
+            document.getElementById("image-container").style.height = "100px"
+            document.getElementById("image-container2").style.height = "280px"
+            document.getElementById("image-container3").style.height = "100px"
+            // document.getElementById("image-container4").style.height = "100px"
+            document.getElementById("image-container5").style.height = "100px"
+            document.getElementById("image-container6").style.height = "100px"
+            document.getElementById("image-container7").style.height = "100px"
+            // document.getElementById("image-container8").style.height = "100px"
+        }
+    </script>
+    <script>
+        if (localStorage.getItem("beta") == "1") {
+            document.getElementById("beta-container1").style.display = "block"
+
+            // document.getElementById("beta-container2").style.display = "block"
+            // document.getElementById("beta-container3").style.display = "block"
+        }
+        animating = false
+        animatingout = false
+        if (mobile() == 0) {
+            $(".image-container").animate({
+                height: '150',
+                width: '80%'
+            })
+            $('.image-container').hover(function () {
+                if (animatingout == true) {
+                    animating = true
+                    $(this).stop()
+                    $(this).animate({
+                        height: 400,
+                        width: '90%'
+                    }, function () {
+                        animatingout = false
+                        animating = true
+                    })
+                }
+
+
+                if (animating == false) {
+                    animating = true
+                    $(this).animate({
+                        height: 400,
+                        width: '90%'
+                    }, function () {
+                        animating = false
+                    })
+                }
+            })
+            $('.image-container').mouseleave(function () {
+                animatingout = true
+                $(this).stop()
+                $(this).animate({
+                    height: '150',
+                    width: '80%'
+                }, function () {
+                    animatingout = false
+                    animating = false
+                })
+            })
+        }
+    </script>
+    <style type="text/css">
+        .indicator {
+            display: none;
+            margin-top: -15px;
+            margin-left: 5px;
+            background-color: red;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            text-align: center;
+            line-height: 20px;
+            font-size: 14px;
+        }
+        .blob {
+            box-shadow: 0 0 0 0 lightgray;
+            transform: scale(1);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(0.98);
+                box-shadow: 0 0 0 0 lightgray;
+            }
+
+            70% {
+                transform: scale(1);
+                box-shadow: 0 0 0 10px rgba(0, 0, 0, 0);
+            }
+
+            100% {
+                transform: scale(0.98);
+                box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+            }
+        }
+
+        .popup .popuptext {
+            visibility: hidden;
+            background-color: #555;
+            color: #fff;
+            text-align: center;
+            /*z-index: 9999;*/
+            position: fixed;
+            top: 30%;
+            left: 5%;
+            width: 90%;
+        }
+
+        .popup .show {
+            visibility: visible;
+            -webkit-animation: fadeIn 1s;
+            animation: fadeIn 1s;
+        }
+        @-webkit-keyframes fadeIn {
+            from {opacity: 0;}
+            to {opacity: 1;}
+        }
+        @keyframes fadeIn {
+            from {opacity: 0;}
+            to {opacity:1 ;}
+        }
+
+
+        A:link {
+            COLOR: rgba(0, 0, 0, 0.68);
+            TEXT-DECORATION: none;
+            font-weight: normal
+        }
+
+        A:visited {
+            COLOR: rgba(0, 0, 0, 0.68);
+            TEXT-DECORATION: none;
+            font-weight: normal
+        }
+
+        A:active {
+            COLOR: rgba(0, 0, 0, 0.68);
+            TEXT-DECORATION: none
+        }
+
+        A:hover {
+            COLOR: rgba(19, 19, 19, 0.76);
+            TEXT-DECORATION: none;
+            font-weight: none;
+        }
+    </style>
+    <style>
+        .image-container {
+            background-size: 100%;
+            background-repeat: no-repeat;
+        }
+    </style>
+    <script>
+        if (localStorage.getItem("theme") == "dark-mode") {
+            document.getElementById("theme").src = "images/light.png"
+            const addCSS = css => document.head.appendChild(document.createElement("style")).innerHTML = css;
+            addCSS(`html:not(#ente):not(.image-container){filter: invert(1) hue-rotate(180deg);}#ente{filter: invert(1) hue-rotate(180deg);}.image-container{filter: invert(1) hue-rotate(180deg);}`)
+        } else {
+        }
+        function changeTheme() {
+
+            if (localStorage.getItem("theme") == "dark-mode") {
+                document.getElementById("theme").src = "images/dark.png"
+                localStorage.setItem("theme", "light-mode")
+                const styleElement = document.querySelector('style');
+                styleElement.remove();
+            } else {
+                document.getElementById("theme").src = "images/light.png"
+                localStorage.setItem("theme", "dark-mode")
+                const addCSS = css => document.head.appendChild(document.createElement("style")).innerHTML = css;
+
+                addCSS(`html:not(#ente):not(.image-container){filter: invert(1) hue-rotate(180deg);}#ente{filter: invert(1) hue-rotate(180deg);}.image-container{filter: invert(1) hue-rotate(180deg);}`)
+
+            }
+
+        }
+        if (localStorage.getItem("beta") == "0" || localStorage.getItem("beta") == null) {
+            document.getElementById("theme").style.display = "none"
+            if (localStorage.getItem("theme") == "dark-mode") {
+                const styleElement = document.querySelector('style');
+                styleElement.remove();
+            }
+
+        }
+    </script>
+
+    <!--div-- id="cookiePopup" class="cookiePopup">
+        <h4 style="margin-top: 10px;">HeFa</h4>
+        <p>Die HeFa Anmeldung ist geöffnet. Melden Sie jetzt ihr Kind für die nächste HeFa an. Klicken Sie <a href="anmeldung.html" style="color: rgba(46, 167, 127, 0.89)">hier</a>, um zur Anmeldung zu gelangen.
+        </p>
+        <button id="acceptCookie">Verstanden</button>
+    </div-->
+    <div id="cookiePopup" class="cookiePopup">
+        <h4 style="margin-top: 10px; color: black">25 Jahre Herbstfahrt</h4>
+        <p>Klicken Sie <a href="anmeldung" style="color: rgba(46, 167, 127, 0.89)">hier</a>, um ihr Kind jetzt zur HeFa 2025 anzumelden.
+        </p>
+        <button id="acceptCookie">Jetzt nicht</button>
+    </div>
+
+    <script type="text/javascript">
+        // set cookie according to you
+        var cookieName = "hefaPopup";
+        var latest = "funta.15.12.2023";
+        var cookieExpireDays = 300;
+
+        // when users click accept button
+        let acceptCookie = document.getElementById("acceptCookie");
+        acceptCookie.onclick = function () {
+            $(".cookiePopup").animate({
+                    height: '0'
+                },
+                function acc() {
+                    createCookie(cookieName, latest, cookieExpireDays);
+                })
+
+        }
+
+        // function to set cookie in web browser
+        let createCookie = function (cookieName, cookieValue, cookieExpireDays) {
+            location.reload();
+            let currentDate = new Date();
+            currentDate.setTime(currentDate.getTime() + (cookieExpireDays * 24 * 60 * 60 * 1000));
+            let expires = "expires=" + currentDate.toGMTString();
+            document.cookie = cookieName + "=" + cookieValue + ";" + expires + ";path=/";
+            if (document.cookie) {
+                document.getElementById("cookiePopup").style.display = "none";
+            } else {
+                alert("Unable to set cookie. Please allow cookies!");
+            }
+
+        }
+
+        // get cookie from the web browser
+        let getCookie = function (cookieName) {
+            let name = cookieName + "=";
+            let decodedCookie = decodeURIComponent(document.cookie);
+            let ca = decodedCookie.split(';');
+            for (let i = 0; i < ca.length; i++) {
+                let c = ca[i];
+                while (c.charAt(0) == ' ') {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                    return c.substring(name.length, c.length);
+                }
+            }
+            return "";
+        }
+        // check cookie is set or not
+        let checkCookie = function () {
+            let check = getCookie(cookieName);
+            if (check != latest) {
+                const HttpPublicSettingsPopup = new XMLHttpRequest();
+                const urlPublicSettingsPopup='https://regapi.gruleiru.de/publicSettings';
+                HttpPublicSettingsPopup.open("GET", urlPublicSettingsPopup);
+                HttpPublicSettingsPopup.send();
+                HttpPublicSettingsPopup.onload = (e) => {
+                    response = JSON.parse(HttpPublicSettingsPopup.responseText);
+                    console.log(response["settings"])
+                    if (response["error"] == "ok"){
+                        if (response["settings"]["openRegistry"] == "1") {
+                            document.getElementById("cookiePopup").style.display = "block";
+                        }
+                        else {
+                            document.getElementById("cookiePopup").style.display = "none";
+                        }
+                    }
+                }
+            } else {
+                document.getElementById("cookiePopup").style.display = "none";
+
+            }
+        }
+
+        checkCookie();
+    </script>
+</body>
+</div>
+<footer style="background-color: #f8f9fa; text-align: center; padding: 0px; position: fixed; left: 0; bottom: 0; width: 100%; box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.5);" class="footerAnimation">
+    <!--p>&copy; 2023 GruLeiRu</p-->
+    <p>GruLeiRu | <a href="policy.html">Datenschutz</a></p>
+    <img class="lazyLoading" id="lazyLoadImage" src="./images/lazy.png" style="height:20px; cursor:pointer; position: absolute; top: 5px; right: 10px;">
+
+</footer>
+<script>
+    if(localStorage.getItem('lazyloading')) {
+        lazyLoadImage.style.backgroundColor = "lightgreen"; // Change the color to red
+    } else {
+        lazyLoadImage.style.backgroundColor = "white"; // Change the color to white
+    }
+    document.getElementById('lazyLoadImage').addEventListener('click', function() {
+        var lazyLoadImage = document.getElementById('lazyLoadImage');
+        if(localStorage.getItem('lazyloading')) {
+            localStorage.removeItem('lazyloading');
+            lazyLoadImage.style.backgroundColor = "white"; // Change the color to red
+        } else {
+            localStorage.setItem('lazyloading', 'true');
+            lazyLoadImage.style.backgroundColor = "lightgreen"; // Change the color to white
+        }
+    });
+</script>
+<style>
+
+
+    .footerAnimation {
+        animation-name: footerAnimation;
+        animation-duration: 0.5s;
+        animation-fill-mode: forwards;
+    }
+
+    @keyframes footerAnimation {
+        0% {
+            bottom: -100px;
+        }
+        100% {
+            bottom: 0px;
+        }
+    }
+
+    .image-container {
+        animation-name: sizeIn;
+        animation-duration: 0.5s;
+        animation-fill-mode: forwards;
+    }
+
+    @keyframes sizeIn {
+        0% {
+            transform: scale(0.8);
+        }
+        100% {
+            transform: scale(1);
+        }
+    }
+
+    #mainbar {
+        margin-top: -100px;
+        animation-name: slidein;
+        animation-duration: 0.5s;
+        animation-fill-mode: forwards;
+        margin-bottom: 150px;
+    }
+
+    @keyframes slidein {
+        0% {
+            margin-bottom: 150px;
+            margin-top: -100px;
+        }
+        100% {
+            margin-bottom: 30px;
+            margin-top: 15px;
+        }
+    }
+
+    .hefaStatus {
+        width: 0;
+        /*animation-name: reviewStatus;*/
+        /*animation-duration: 2s;*/
+        /*animation-fill-mode: forwards;*/
+    }
+
+    @keyframes reviewStatus {
+        0% {
+            width: 0;
+        }
+        100% {
+            width: 98%;
+        }
+    }
+
+    .lazyLoading {
+        border-radius: 50%;
+        padding: 3px;
+        box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.1);
+    }
+    body {
+        height: 115%;
+    }
+
+    #staylgd {
+        accent-color: rgba(46, 167, 127, 0.89);
+    }
+
+    #border {
+        position: absolute;
+        top: 0px;
+        right: 0px;
+        bottom: 0px;
+        left: 0px;
+        width: 100%;
+        height: 100vh;
+        background-color: #d4d4d479;
+    }
+
+    #cookiePopup {
+        background: white;
+        width: auto;
+        position: fixed;
+        left: 10px;
+        bottom: 60px;
+        box-shadow: 0px 0px 15px #cccccc;
+        padding: 5px 10px;
+        border-radius: 12px;
+        margin-right: 10px;
+    }
+
+    #cookiePopup p {
+        text-align: left;
+        font-size: 15px;
+        color: #4e4e4e;
+    }
+
+    #cookiePopup button {
+        width: 100%;
+        height: 50px;
+        border: navajowhite;
+        background: #38d39f;
+        padding: 5px;
+        border-radius: 90px;
+        margin-bottom: 10px;
+        color: white;
+    }
+
+</style>
+</html>

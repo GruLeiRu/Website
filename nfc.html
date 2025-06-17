@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Karneval</title>
+</head>
+<body>
+  <span id="n">Name: ...</span><br>
+  <span id="g">Gürtel: ...</span><br>
+  <span id="b">Becher: ...</span><br>
+  <span id="p">Preis: ...</span><br>
+  <script>
+    function displayUrlParams() {
+      const params = new URLSearchParams(window.location.search);
+      const g = params.get('g');
+      const b = params.get('b');
+      const n = params.get('n');
+      document.getElementById('n').innerHTML = 'Name: ' + n;
+      document.getElementById('g').innerHTML = 'Gürtel: ' + g;
+      document.getElementById('b').innerHTML = 'Becher: ' + b;
+      document.getElementById('p').innerHTML = 'Preis: ' + (g * 15 + b * 13) + '€';
+
+    }
+    displayUrlParams()
+  </script>
+  <style>
+    span {
+      font-size: 50px;
+    }
+  </style>
+</body>
+</html>

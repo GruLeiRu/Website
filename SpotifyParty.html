@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Spotify</title>
+    <script>
+        window.onload = function() {
+
+            fetch('https://spotify.gruleiru.de/currentlyPlaying', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+                .then(response => response.json())
+                .then(data => {
+                    image = data['item']['album']['images'][0]['url'];
+                    document.getElementById('coverImage').src = image;
+                    document.getElementById('trackName').innerText = data['item']['name'];
+                    document.getElementById('artistName').innerText = data['item']['artists'][0]['name'];
+                    let progressSeconds = Math.floor(data['progress_ms'] / 1000);
+                    let durationSeconds = Math.floor(data['item']['duration_ms'] / 1000);
+
+                    let progressMinutes = Math.floor(progressSeconds / 60);
+                    let remainingProgressSeconds = progressSeconds % 60;
+
+                    let durationMinutes = Math.floor(durationSeconds / 60);
+                    let remainingDurationSeconds = durationSeconds % 60;
+
+                    document.getElementById('timestamp').innerText = progressMinutes.toString().padStart(2, '0') + ':' + remainingProgressSeconds.toString().padStart(2, '0') + ' / ' + durationMinutes.toString().padStart(2, '0') + ':' + remainingDurationSeconds.toString().padStart(2, '0');
+
+                    updateProgress();
+                    updateNextPlaying();
+                    setInterval(updateTimestamp, 1000);
+                    setInterval(updateProgress, 5000);
+                    setInterval(updateNextPlaying, 5000);
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
+        };
+        let currentSeconds = 0;
+
+        function updateTimestamp() {
+            if (isPlaying) {
+                currentSeconds++;
+                let progressMinutes = Math.floor(currentSeconds / 60);
+                let remainingProgressSeconds = currentSeconds % 60;
+
+                document.getElementById('timestamp').innerText = progressMinutes.toString().padStart(2, '0') + ':' + remainingProgressSeconds.toString().padStart(2, '0') + ' / ' + document.getElementById('timestamp').innerText.split(' / ')[1];
+            }
+        }
+
+        function updateNextPlaying() {
+            fetch('https://spotify.gruleiru.de/getLocalQueue', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data["message"] === "ok") {
+                        document.getElementById('coverImageNext').src = data['queue'][0]["cover"];
+                        document.getElementById('trackNameNext').innerText = data['queue'][0]['name'];
+                        document.getElementById('artistNameNext').innerText = data['queue'][0]['artist'];
+                    } else {
+                        document.getElementById('coverImageNext').src = '';
+                        document.getElementById('trackNameNext').innerText = '';
+                        document.getElementById('artistNameNext').innerText = '';
+                    }
+                })
+        }
+
+        function updateProgress() {
+            fetch('https://spotify.gruleiru.de/currentlyPlaying', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+                .then(response => response.json())
+                .then(data => {
+                    let progressSeconds = Math.floor(data['progress_ms'] / 1000);
+                    if (progressSeconds !== currentSeconds) {
+                        currentSeconds = progressSeconds;
+                    }
+                    let durationSeconds = Math.floor(data['item']['duration_ms'] / 1000);
+
+                    let progressMinutes = Math.floor(progressSeconds / 60);
+                    let remainingProgressSeconds = progressSeconds % 60;
+
+                    let durationMinutes = Math.floor(durationSeconds / 60);
+                    let remainingDurationSeconds = durationSeconds % 60;
+
+                    document.getElementById('timestamp').innerText = progressMinutes.toString().padStart(2, '0') + ':' + remainingProgressSeconds.toString().padStart(2, '0') + ' / ' + durationMinutes.toString().padStart(2, '0') + ':' + remainingDurationSeconds.toString().padStart(2, '0');
+
+
+                    if (data['is_playing']) {
+                        try {
+                            isPlaying = true;
+                        } catch (e) {
+                        }
+
+                    } else {
+                        isPlaying = false;
+                    }
+
+                    image = data['item']['album']['images'][0]['url'];
+
+                    let allCookies = document.cookie;
+                    let cookiesArray = allCookies.split('; ');
+                    let trackUriCookie = cookiesArray.find(cookie => cookie.startsWith('liked='));
+                    let queuedUriCookie = cookiesArray.find(cookie => cookie.startsWith('queued='));
+                    if (trackUriCookie !== "liked=" + data['item']['name']) {
+                        document.getElementById('like').disabled = false;
+                        document.getElementById('dislike').disabled = false;
+                    } else {
+                        document.getElementById('like').disabled = true;
+                        document.getElementById('dislike').disabled = true;
+                    }
+                    if (queuedUriCookie === "queued=" + data['item']['uri']) {
+                        document.getElementById('trackButton').disabled = false;
+                        document.cookie = "queued=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                    } else {
+                        document.getElementById('trackButton').disabled = queuedUriCookie !== undefined;
+                    }
+                    document.getElementById('coverImage').src = image;
+                    document.getElementById('trackName').innerText = data['item']['name'];
+                    document.getElementById('artistName').innerText = data['item']['artists'][0]['name'];
+
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
+        }
+
+    </script>
+    <script>
+        let isPlaying = true;
+
+        function submitForm(e, endpoint) {
+            e.preventDefault();
+            let data = {};
+            if (endpoint === 'play') {
+                data = {trackName: e.target.elements[0].value};
+                document.getElementById('trackInput').value = '';
+            } else if (endpoint === 'addToQueue') {
+                data = {trackName: document.getElementById('trackInput').value};
+                document.getElementById("trackButton").disabled = true;
+                document.getElementById('trackInput').value = '';
+            } else if (endpoint === 'setDevice') {
+                data = { deviceName: e.target.elements[0].value };
+            } else if (endpoint === 'pauseAndResume') {
+                if (isPlaying) {
+                    isPlaying = false;
+                } else {
+                    isPlaying = true;
+                }
+            } else if (endpoint === 'like') {
+                console.log("like pending")
+                document.cookie = `liked=${document.getElementById("trackName").innerText};`;
+                document.getElementById('like').disabled = true;
+                document.getElementById('dislike').disabled = true;
+            } else if (endpoint === 'dislike') {
+                console.log("dislike pending")
+                document.cookie = `liked=${document.getElementById("trackName").innerText};`;
+                document.getElementById('like').disabled = true;
+                document.getElementById('dislike').disabled = true;
+            }
+            fetch(`https://spotify.gruleiru.de/${endpoint}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            }).then(response => response.json())
+                .then(data => {
+                        console.log(data)
+                        if( endpoint === "addToQueue" ) {
+                            updateNextPlaying();
+                            document.cookie = `queued=${data["uri"]};`;
+                        }
+                    }
+                )
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
+        }
+    </script>
+</head>
+<body>
+<div class="container">
+    <div class="onlineContainer">
+        <img src="./images/eye.png" class="onlineIcon"><span id="online">0</span>
+        <script>
+            setInterval(() => {
+                fetch('https://spotify.gruleiru.de/online', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        document.getElementById('online').innerText = data['online'];
+                    })
+                    .catch((error) => {
+                        console.error('Error:', error);
+                    });
+            }, 4000);
+        </script>
+    </div>
+    <img id="coverImage" src="" alt="" style="width: 300px">
+    <span id="trackName" class="trackName" style="font-size: 32px"></span>
+    <span id="artistName"></span>
+    <span id="timestamp"></span>
+    <form onsubmit="submitForm(event, 'addToQueue')">
+        <input type="text" name="trackName" id="trackInput" placeholder="Enter track name">
+        <button type="submit" id="trackButton">Add</button>
+    </form>
+    <div class="controls">
+        <form onsubmit="submitForm(event, 'like')">
+            <button id="like" type="submit" style="padding: 25px 50px; margin-right: 20px">
+                👍
+            </button>
+        </form>
+        <form onsubmit="submitForm(event, 'dislike')">
+            <button id="dislike" type="submit" style="padding: 25px 50px; margin-left: 20px">
+                👎
+            </button>
+        </form>
+    </div>
+    <div class="divider"></div>
+    <span style="font-size: 65px; margin-bottom: 50px" class="trackName">Next Song</span>
+    <img id="coverImageNext" src="" alt="" style="width: 300px">
+    <span id="trackNameNext" class="trackName" style="font-size: 32px"></span>
+    <span id="artistNameNext"></span>
+    <footer>
+        <p>Developed & Published by Lino | Powered by Spotipy & SBMedia®</p>
+    </footer>
+</div>
+</body>
+<style>
+    footer {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        text-align: center;
+        padding: 10px;
+        background-color: #121212;
+    }
+    body {
+        background: #121212 linear-gradient(to top, #381005 0%, #121212 30%);
+        color: #b3b3b3;
+        font-family: 'Arial', sans-serif;
+        height: 100vh;
+    }
+
+    form {
+        margin-bottom: 20px;
+    }
+
+    input[type="text"] {
+        background-color: #181818;
+        border: none;
+        border-radius: 150px;
+        padding: 25px 60px;
+        width: 450px;
+        font-size: 36px;
+        color: #b3b3b3;
+    }
+
+    button[type="submit"] {
+        background-color: #fa4614;
+        border: none;
+        border-radius: 150px;
+        color: #ffffff;
+        padding: 25px 60px;
+        font-size: 36px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    button[type="submit"]:hover {
+        background-color: #e74113;
+    }
+
+    button[type="submit"]:disabled {
+        background-color: #85260c;
+        cursor: not-allowed;
+    }
+    @media only screen and (max-width: 1000px) {
+        input[type="text"] {
+            padding: 35px 70px;
+            width: 450px;
+            font-size: 36px;
+        }
+
+        button[type="submit"] {
+            padding: 35px 70px;
+            font-size: 36px;
+        }
+    }
+
+    .onlineIcon {
+        width: 40px;
+        filter: invert(1);
+    }
+
+    #online {
+        font-size: 32px;
+    }
+
+    .onlineContainer {
+        display: flex;
+        justify-content: left;
+        align-items: end;
+        gap: 10px;
+        width: 80%;
+        margin-left: 0;
+    }
+
+    .divider {
+        width: 80%;
+        margin-left: 0;
+        margin-top: 80px;
+        margin-bottom: 80px;
+        height: 2px;
+        background-color: #e74113;
+        border-radius: 10px;
+    }
+    .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 20px;
+        padding-top: 50px;
+    }
+    .skip {
+        width: 30px;
+        margin-top: 5px;
+        filter: invert(1);
+    }
+    .controls {
+        display: flex;
+        justify-content: space-between;
+    }
+    .spaceButtons {
+        margin: 0 20px;
+    }
+    #coverImage {
+        border-radius: 20px;
+    }
+    #coverImageNext {
+        border-radius: 20px;
+    }
+    .trackName {
+        font-size: 28px;
+        color: #e74113;
+    }
+    span {
+        font-size: 24px;
+    }
+    .queue {
+        height: 900px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        overflow-y: auto;
+    }
+    .queueItem {
+        display: flex;
+        justify-content: space-between;
+    }
+    .queueItemText {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        text-align: center;
+    }
+    #trackInput {
+        border-top-right-radius: 0px;
+        border-bottom-right-radius: 0px;
+    }
+    #trackButton {
+        border-top-left-radius: 0px;
+        border-bottom-left-radius: 0px;
+    }
+</style>
+</html>

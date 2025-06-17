@@ -1,0 +1,680 @@
+<!doctype html>
+<html lang="de">
+
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-QNZEKF7831"></script>
+  <script>
+
+    //////////////////////////////////////////////Data//////////////////////////////////////////////
+    (function (window) {
+      {
+        var unknown = '-';
+
+        // screen
+        var screenSize = '';
+        if (screen.width) {
+          width = (screen.width) ? screen.width : '';
+          height = (screen.height) ? screen.height : '';
+          screenSize += '' + width + " x " + height;
+        }
+
+        // browser
+        var nVer = navigator.appVersion;
+        var nAgt = navigator.userAgent;
+        var browser = navigator.appName;
+        var version = '' + parseFloat(navigator.appVersion);
+        var majorVersion = parseInt(navigator.appVersion, 10);
+        var nameOffset, verOffset, ix;
+
+        // Opera
+        if ((verOffset = nAgt.indexOf('Opera')) != -1) {
+          browser = 'Opera';
+          version = nAgt.substring(verOffset + 6);
+          if ((verOffset = nAgt.indexOf('Version')) != -1) {
+            version = nAgt.substring(verOffset + 8);
+          }
+        }
+        // Opera Next
+        if ((verOffset = nAgt.indexOf('OPR')) != -1) {
+          browser = 'Opera';
+          version = nAgt.substring(verOffset + 4);
+        }
+        // Legacy Edge
+        else if ((verOffset = nAgt.indexOf('Edge')) != -1) {
+          browser = 'Microsoft Legacy Edge';
+          version = nAgt.substring(verOffset + 5);
+        }
+        // Edge (Chromium)
+        else if ((verOffset = nAgt.indexOf('Edg')) != -1) {
+          browser = 'Microsoft Edge';
+          version = nAgt.substring(verOffset + 4);
+        }
+        // MSIE
+        else if ((verOffset = nAgt.indexOf('MSIE')) != -1) {
+          browser = 'Microsoft Internet Explorer';
+          version = nAgt.substring(verOffset + 5);
+        }
+        // Chrome
+        else if ((verOffset = nAgt.indexOf('Chrome')) != -1) {
+          browser = 'Chrome';
+          version = nAgt.substring(verOffset + 7);
+        }
+        // Safari
+        else if ((verOffset = nAgt.indexOf('Safari')) != -1) {
+          browser = 'Safari';
+          version = nAgt.substring(verOffset + 7);
+          if ((verOffset = nAgt.indexOf('Version')) != -1) {
+            version = nAgt.substring(verOffset + 8);
+          }
+        }
+        // Firefox
+        else if ((verOffset = nAgt.indexOf('Firefox')) != -1) {
+          browser = 'Firefox';
+          version = nAgt.substring(verOffset + 8);
+        }
+        // MSIE 11+
+        else if (nAgt.indexOf('Trident/') != -1) {
+          browser = 'Microsoft Internet Explorer';
+          version = nAgt.substring(nAgt.indexOf('rv:') + 3);
+        }
+        // Other browsers
+        else if ((nameOffset = nAgt.lastIndexOf(' ') + 1) < (verOffset = nAgt.lastIndexOf('/'))) {
+          browser = nAgt.substring(nameOffset, verOffset);
+          version = nAgt.substring(verOffset + 1);
+          if (browser.toLowerCase() == browser.toUpperCase()) {
+            browser = navigator.appName;
+          }
+        }
+        // trim the version string
+        if ((ix = version.indexOf(';')) != -1) version = version.substring(0, ix);
+        if ((ix = version.indexOf(' ')) != -1) version = version.substring(0, ix);
+        if ((ix = version.indexOf(')')) != -1) version = version.substring(0, ix);
+
+        majorVersion = parseInt('' + version, 10);
+        if (isNaN(majorVersion)) {
+          version = '' + parseFloat(navigator.appVersion);
+          majorVersion = parseInt(navigator.appVersion, 10);
+        }
+
+        // mobile version
+        var mobile = /Mobile|mini|Fennec|Android|iP(ad|od|hone)/.test(nVer);
+
+        // cookie
+        var cookieEnabled = (navigator.cookieEnabled) ? true : false;
+
+        if (typeof navigator.cookieEnabled == 'undefined' && !cookieEnabled) {
+          document.cookie = 'testcookie';
+          cookieEnabled = (document.cookie.indexOf('testcookie') != -1) ? true : false;
+        }
+
+        // system
+        var os = unknown;
+        var clientStrings = [
+          {s:'Windows 10', r:/(Windows 10.0|Windows NT 10.0)/},
+          {s:'Windows 8.1', r:/(Windows 8.1|Windows NT 6.3)/},
+          {s:'Windows 8', r:/(Windows 8|Windows NT 6.2)/},
+          {s:'Windows 7', r:/(Windows 7|Windows NT 6.1)/},
+          {s:'Windows Vista', r:/Windows NT 6.0/},
+          {s:'Windows Server 2003', r:/Windows NT 5.2/},
+          {s:'Windows XP', r:/(Windows NT 5.1|Windows XP)/},
+          {s:'Windows 2000', r:/(Windows NT 5.0|Windows 2000)/},
+          {s:'Windows ME', r:/(Win 9x 4.90|Windows ME)/},
+          {s:'Windows 98', r:/(Windows 98|Win98)/},
+          {s:'Windows 95', r:/(Windows 95|Win95|Windows_95)/},
+          {s:'Windows NT 4.0', r:/(Windows NT 4.0|WinNT4.0|WinNT|Windows NT)/},
+          {s:'Windows CE', r:/Windows CE/},
+          {s:'Windows 3.11', r:/Win16/},
+          {s:'Android', r:/Android/},
+          {s:'Open BSD', r:/OpenBSD/},
+          {s:'Sun OS', r:/SunOS/},
+          {s:'Chrome OS', r:/CrOS/},
+          {s:'Linux', r:/(Linux|X11(?!.*CrOS))/},
+          {s:'iOS', r:/(iPhone|iPad|iPod)/},
+          {s:'Mac OS X', r:/Mac OS X/},
+          {s:'Mac OS', r:/(Mac OS|MacPPC|MacIntel|Mac_PowerPC|Macintosh)/},
+          {s:'QNX', r:/QNX/},
+          {s:'UNIX', r:/UNIX/},
+          {s:'BeOS', r:/BeOS/},
+          {s:'OS/2', r:/OS\/2/},
+          {s:'Search Bot', r:/(nuhk|Googlebot|Yammybot|Openbot|Slurp|MSNBot|Ask Jeeves\/Teoma|ia_archiver)/}
+        ];
+        for (var id in clientStrings) {
+          var cs = clientStrings[id];
+          if (cs.r.test(nAgt)) {
+            os = cs.s;
+            break;
+          }
+        }
+
+        var osVersion = unknown;
+
+        if (/Windows/.test(os)) {
+          osVersion = /Windows (.*)/.exec(os)[1];
+          os = 'Windows';
+        }
+
+        switch (os) {
+          case 'Mac OS':
+          case 'Mac OS X':
+          case 'Android':
+            osVersion = /(?:Android|Mac OS|Mac OS X|MacPPC|MacIntel|Mac_PowerPC|Macintosh) ([\.\_\d]+)/.exec(nAgt)[1];
+            break;
+
+          case 'iOS':
+            osVersion = /OS (\d+)_(\d+)_?(\d+)?/.exec(nVer);
+            osVersion = osVersion[1] + '.' + osVersion[2] + '.' + (osVersion[3] | 0);
+            break;
+        }
+
+        // flash (you'll need to include swfobject)
+        var flashVersion = 'no check';
+        if (typeof swfobject != 'undefined') {
+          var fv = swfobject.getFlashPlayerVersion();
+          if (fv.major > 0) {
+            flashVersion = fv.major + '.' + fv.minor + ' r' + fv.release;
+          }
+          else  {
+            flashVersion = unknown;
+          }
+        }
+      }
+
+      window.jscd = {
+        screen: screenSize,
+        browser: browser,
+        browserVersion: version,
+        browserMajorVersion: majorVersion,
+        mobile: mobile,
+        os: os,
+        osVersion: osVersion,
+        cookies: cookieEnabled,
+        flashVersion: flashVersion
+      };
+    }(this));
+    //////////////////////////////////////////////Data//////////////////////////////////////////////
+
+    os = jscd.os +' '+ jscd.osVersion
+    browser = jscd.browser
+    mobile = jscd.mobile
+    var cookieName = "CookieStatus";
+    var cookieValue = "Status";
+    var cookieExpireDays = 30;
+    if (localStorage.getItem("sessionType") == "normal") {
+      if (localStorage.getItem("session")) {
+        const Http = new XMLHttpRequest();
+        const url = 'https://regapi.gruleiru.de/invites?session=' + localStorage.getItem("session");
+        Http.open("GET", url);
+        Http.send();
+        Http.onload = (e) => {
+          response = JSON.parse(Http.responseText);
+          console.log(response)
+
+          if (response["error"] == "0x2") {
+            console.log("invalid session")
+          } else {
+            window.location = "https://www.gruleiru.de/panel?sid=" + localStorage.getItem("session")
+          }
+        }
+      }
+    } else if (localStorage.getItem("sessionType") == "super") {
+      console.log("super")
+      const Http = new XMLHttpRequest();
+      const url = 'https://regapi.gruleiru.de/login?u=' + atob(localStorage.getItem("sessionU")) + "&&psw=" + atob(localStorage.getItem("sessionP")) + '&&device=' + os + "&&browser=" + browser + "&&mobile=" + mobile;
+      Http.open("GET", url);
+      Http.send();
+      Http.onload = (e) => {
+        response = JSON.parse(Http.responseText);
+        console.log(response)
+        if (response["auth"] == "1") {
+          if (document.getElementById("staylgd").checked) {
+            if (localStorage.getItem("sessionType") != "super") {
+              localStorage.setItem("session", response["session"] + "");
+              localStorage.setItem("sessionType", "normal");
+            } else {
+              localStorage.setItem("sessionP", btoa(password.value) + "");
+              localStorage.setItem("sessionU", btoa(username.value) + "");
+            }
+          }
+          window.location = "https://www.gruleiru.de/panel?sid=" + response["session"]
+        }
+      }
+    }
+
+
+    // get cookie from the web browser
+    let getCookie2 = function (cookieName) {
+      let name = cookieName + "=";
+      let decodedCookie = decodeURIComponent(document.cookie);
+      let ca = decodedCookie.split(';');
+      for (let i = 0; i < ca.length; i++) {
+        let c = ca[i];
+        while (c.charAt(0) == ' ') {
+          c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+          return c.substring(name.length, c.length);
+        }
+      }
+      return "";
+    }
+    // check cookie is set or not
+    let checkCookie2 = function () {
+      let check = getCookie2(cookieName);
+      if (check == "") {
+
+      } else {
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-QNZEKF7831');
+
+      }
+    }
+    checkCookie2();
+
+
+  </script>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="fonts/icomoon/style.css">
+
+  <link rel="stylesheet" href="css/owl.carousel.min.css">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+
+  <!-- Style -->
+  <link rel="stylesheet" href="css/style.css">
+
+  <title>Login</title>
+</head>
+
+<body>
+<!--  <script defer src="detect.js"></script>-->
+<!--  <script defer src="index.js"></script>-->
+  <script src="js/barrel/dist/barrel-roll.js"></script>
+
+
+  <div class="content">
+    <div class="container">
+      <div class="row justify-content-center">
+        <!-- <div class="col-md-6 order-md-2">
+          <img src="images/undraw_file_sync_ot38.svg" alt="Image" class="img-fluid">
+        </div> -->
+        <div class="col-md-6 contents">
+          <div class="row justify-content-center">
+            <div class="col-md-12">
+              <div class="form-block" id="block">
+                <div class="mb-4">
+                  <h3>Gruleiru <strong class="nwtxt">Log<span onclick="count()">i</span>n</strong></h3>
+                  <p class="nwtxt">Gib deinen Benutzernamen und Passwort ein</p>
+                </div>
+                <form action="#" method="post" id="f1">
+                  <div class="form-group first">
+                    <label for="username" id="lbl1">Benutzername/E-Mail</label>
+                    <input type="text" class="form-control" id="username">
+
+                  </div>
+                  <div class="form-group last mb-4">
+                    <label for="password">Passwort/OTP</label>
+                    <input type="password" class="form-control" id="password">
+
+                  </div>
+                  <div class="form-group last mb-4">
+                    <input type="checkbox" onclick="myFunction()" id="spsw"> Passwort anzeigen<br>
+                    <script>
+                      function myFunction() {
+                        var x = document.getElementById("password");
+                        if (x.type === "password") {
+                          x.type = "text";
+                        } else {
+                          x.type = "password";
+                        }
+                      }
+                    </script>
+                    <input type="checkbox" id="staylgd"> Angemeldet bleiben<br>
+                  </div>
+                  <div id="tdiv1"></div>
+
+                  <input type="button" value="Log In" class="btn btn-pill text-white btn-block btn-primary" id="bbbtn1">
+
+                  <br>
+                  <span style="color: #38d39f;" onclick="requestQR()">Login mit QR-Code</span><br>
+<!--                  <span style="color: #38d39f;" onclick="disabled()">FaceID</span>-->
+                </form>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <div id="border"></div>
+  <div id="target"></div>
+  <div id="cookiePopup" class="cookiePopup">
+    <h4 style="margin-top: 10px;">Cookies Policy</h4>
+    <p>Diese Website verwendet Cookies und Cache Speicher um das Nutzer-Verhalten zu Analysieren und Einstellungen lokal
+      zu speichern. Klicke <a href="policy">hier</a> um die Cookie Policy anzusehen</p>
+    <button id="acceptCookie">Annehmen</button>
+  </div>
+  <style>
+    body {
+      height: 100%;
+    }
+
+    #staylgd {
+      accent-color: rgba(46, 167, 127, 0.89);
+    }
+
+    #spsw {
+      accent-color: rgba(46, 167, 127, 0.89);
+    }
+
+    #border {
+      position: absolute;
+      top: 0px;
+      right: 0px;
+      bottom: 0px;
+      left: 0px;
+      width: 100%;
+      height: 100vh;
+      background-color: #d4d4d479;
+    }
+
+    #cookiePopup {
+      background: white;
+      width: auto;
+      position: fixed;
+      left: 10px;
+      bottom: 20px;
+      box-shadow: 0px 0px 15px #cccccc;
+      padding: 5px 10px;
+      border-radius: 12px;
+      margin-right: 10px;
+    }
+
+    #cookiePopup p {
+      text-align: left;
+      font-size: 15px;
+      color: #4e4e4e;
+    }
+
+    #cookiePopup button {
+      width: 100%;
+      height: 50px;
+      border: navajowhite;
+      background: #38d39f;
+      padding: 5px;
+      border-radius: 90px;
+      margin-bottom: 10px;
+      color: white;
+    }
+
+  </style>
+  <script type="text/javascript">
+    // set cookie according to you
+    var cookieName = "CookieStatus";
+    var cookieValue = "Status";
+    var cookieExpireDays = 30;
+
+    // when users click accept button
+    let acceptCookie = document.getElementById("acceptCookie");
+    acceptCookie.onclick = function () {
+      $(".cookiePopup").animate({
+            height: '0'
+        },
+        function acc() {
+          createCookie(cookieName, cookieValue, cookieExpireDays);
+        })
+      
+    }
+
+    // function to set cookie in web browser
+    let createCookie = function (cookieName, cookieValue, cookieExpireDays) {
+      document.getElementById("border").style.height = "0px"
+      location.reload();
+      let currentDate = new Date();
+      currentDate.setTime(currentDate.getTime() + (cookieExpireDays * 24 * 60 * 60 * 1000));
+      let expires = "expires=" + currentDate.toGMTString();
+      document.cookie = cookieName + "=" + cookieValue + ";" + expires + ";path=/";
+      if (document.cookie) {
+        document.getElementById("cookiePopup").style.display = "none";
+      } else {
+        alert("Unable to set cookie. Please allow all cookies site from cookie setting of your browser");
+      }
+
+    }
+
+    // get cookie from the web browser
+    let getCookie = function (cookieName) {
+      let name = cookieName + "=";
+      let decodedCookie = decodeURIComponent(document.cookie);
+      let ca = decodedCookie.split(';');
+      for (let i = 0; i < ca.length; i++) {
+        let c = ca[i];
+        while (c.charAt(0) == ' ') {
+          c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+          return c.substring(name.length, c.length);
+        }
+      }
+      return "";
+    }
+    // check cookie is set or not
+    let checkCookie = function () {
+      let check = getCookie(cookieName);
+      if (check == "") {
+        document.getElementById("cookiePopup").style.display = "block";
+      } else {
+
+        document.getElementById("cookiePopup").style.display = "none";
+        document.getElementById("border").style.height = "0px"
+
+      }
+    }
+    barrelcounter = 0
+    function count() {
+      if (barrelcounter == 5) {
+        if (document.getElementById("username").value == "aNANAS") {
+          doBarrelRoll()
+        }
+      } else {
+        barrelcounter += 1
+      }
+    }
+
+    checkCookie();
+    qr = false
+    function disabled() {
+      document.getElementById("block").innerHTML = `
+        <span>
+            Aus Sicherheitsgründen wurde die Face Identification vorübergehend deaktiviert, bis ein neues Update veröffentlicht wurde, mit dem die Sicherheit verbessert wird, oder die KI besser trainiert wurde.
+        </span>
+        `
+    }
+    function faceID() {
+      $(".form-block").animate({
+        height: "580"
+      })
+      document.getElementById("block").style.width = "760px"
+      document.getElementById("block").style.marginLeft = "-160px"
+        document.getElementById("block").innerHTML = `
+        <div class="video-wrao">
+          <video id="video" playsinline autoplay style="display: none"></video>
+        </div>
+        <div class="controller">
+        </div>
+        <canvas id="canvas" width="640" height="480" style="border-radius: 10px"></canvas>
+        `
+      const video = document.getElementById('video');
+      const canvas = document.getElementById('canvas');
+      const snap = document.getElementById('snap');
+      const errorMsgElement = document.querySelector('spanErrorMsg');
+
+      const constraints = {
+        audio: false,
+        video: {
+          width: "640", height: "480"
+        }
+      };
+
+      async function init() {
+        try {
+          const stream = await navigator.mediaDevices.getUserMedia(constraints);
+          handleSuccess(stream);
+        } catch (e) {
+          errorMsgElement.innerHTML = `navigator.getUserMedia error:${e.toString()}`;
+        }
+      }
+
+      function dataURLtoBlob(dataURL) {
+        const binary = atob(dataURL.split(',')[1]);
+        const array = [];
+        for (let i = 0; i < binary.length; i++) {
+          array.push(binary.charCodeAt(i));
+        }
+        return new Blob([new Uint8Array(array)], {type: 'image/png'});
+      }
+
+      function handleSuccess(stream) {
+        window.stream = stream;
+        video.srcObject = stream;
+      }
+      init();
+
+      var context = canvas.getContext('2d');
+      found = false
+      count = 0
+      function draw() {
+        if(found == false) {
+          var videoRatio = video.videoWidth / video.videoHeight;
+          var canvasRatio = canvas.width / canvas.height;
+
+          if (videoRatio > canvasRatio) {
+            var scale = canvas.width / video.videoWidth;
+            var scaledHeight = video.videoHeight * scale;
+            var offsetY = (canvas.height - scaledHeight) / 2;
+            context.drawImage(video, 0, offsetY, canvas.width, scaledHeight);
+          } else {
+            var scale = canvas.height / video.videoHeight;
+            var scaledWidth = video.videoWidth * scale;
+            var offsetX = (canvas.width - scaledWidth) / 2;
+            context.drawImage(video, offsetX, 0, scaledWidth, canvas.height);
+          }
+          count += 1
+            if (count == 10) {
+                count = 0
+
+              const canvas = document.getElementById("canvas");
+              const imageData = canvas.toDataURL("image/png");
+              const blob = dataURLtoBlob(imageData);
+              const formData = new FormData();
+              formData.append("image", blob);
+              fetch("https://2fa.gruleiru.de/recface", {
+                method: "POST",
+                body: formData
+              })
+                      .then(response => response.json())
+                      .then(data => {
+                        console.log(data)
+                        if (data["code"] == "0x0") {
+                          found = true
+                          document.getElementById("block").innerHTML = `Session wird erstellt. Bitte wartet...`
+                          fetch("https://2fa.gruleiru.de/senddata?sid=" + data["session"], {
+                            method: "POST",
+                            body: formData
+                          })
+                          window.location.href = `https://www.gruleiru.de/panel?sid=` + data["session"]
+                        } else {
+                          console.log("Fehler")
+                        }
+                      })
+                      .catch(error => console.error(error));
+            }
+          setTimeout(draw, 100);
+        }
+      }
+      draw()
+
+      function send() {
+        context.drawImage(video, 0, 0, 640, 480);
+
+        const canvas = document.getElementById("canvas");
+        const imageData = canvas.toDataURL("image/png");
+        const blob = dataURLtoBlob(imageData);
+        const formData = new FormData();
+        formData.append("image", blob);
+        fetch("https://2fa.gruleiru.de/recface", {
+          method: "POST",
+          body: formData
+        })
+                .then(response => response.json())
+                .then(data => {
+                  console.log(data)
+                  if (data["code"] == "0x0") {
+                    found = true
+                    // window.location.href = `https://www.gruleiru.de/panel?sid=` + data["session"]
+                  } else {
+                    console.log("Fehler")
+                  }
+                })
+                .catch(error => console.error(error));
+      }
+
+    }
+
+    function requestQR() {
+      if (document.getElementById("username").value == "RickAstley") {
+        document.getElementById("block").innerHTML = `<span style="color: black;">Scannen sie diesen QR-Code mit ihrem Handy. Wichtig: Die Anmeldung funktioniert nur, wenn das Handy als Hauptgerät festgelegt wurde! Siehe <a href="https://www.gruleiru.de/help">hier</a> für Hilfe</span><img src="images/rickqr.png" style="width: 100%; height: 100%;">`
+      } else {
+        $(".form-block").animate({
+          height: "580"
+        })
+        const url = 'https://2fa.gruleiru.de/genid';
+        Http.open("GET", url);
+        Http.send();
+        Http.onload = (e) => {
+          response2 = JSON.parse(Http.responseText);
+          id = response2["id"]
+          document.getElementById("block").innerHTML = `<span style="color: black;">Scannen sie diesen QR-Code mit ihrem Handy. Wichtig: Die Anmeldung funktioniert nur, wenn das Handy als Hauptgerät festgelegt wurde! Siehe <a href="https://www.gruleiru.de/help">hier</a> für Hilfe</span><img src="https://2fa.gruleiru.de/genqr?id=${id}" style="width: 100%; height: auto;">`
+          qr = true
+        }
+      }
+    }
+    (function reload() {
+      setTimeout(reload, 500);
+      if (qr == true) {
+        const url = 'https://2fa.gruleiru.de/checkqr?id=' + response2["id"];
+        Http.open("GET", url);
+        Http.send();
+        Http.onload = (e) => {
+          response3 = JSON.parse(Http.responseText);
+          console.log(response3)
+          if (response3["code"] == "ok") {
+            window.location = "https://www.gruleiru.de/panel?sid=" + response3["session"] + "&&message=successful"
+          }
+        }
+      }
+    })();
+  </script>
+
+
+  <script src="js/jquery-3.3.1.min.js"></script>
+  <script src="js/popper.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/main.js"></script>
+
+</body>
+
+</html>

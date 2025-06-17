@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta http-equiv="cache-control" content="max-age=0">
+  <meta http-equiv="cache-control" content="no-cache">
+  <meta http-equiv="expires" content="-1">
+  <meta http-equiv="expires" content="Tue, 01 Jan 1980 11:00:00 GMT">
+  <meta http-equiv="pragma" content="no-cache">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="fonts/icomoon/style.css">
+
+  <link rel="stylesheet" href="css/owl.carousel.min.css">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+
+  <!-- Style -->
+  <link rel="stylesheet" href="css/style.css">
+
+  <title>Newsletter</title>
+</head>
+<body>
+
+
+
+<div class="content">
+  <div class="container">
+    <div class="row justify-content-center">
+      <!-- <div class="col-md-6 order-md-2">
+        <img src="images/undraw_file_sync_ot38.svg" alt="Image" class="img-fluid">
+      </div> -->
+<!--      <script>window.location.href = "unreachable"</script>-->
+      <div class="col-md-6 contents">
+        <div class="row justify-content-center">
+          <div class="col-md-12">
+            <div class="form-block" id="block">
+              <label><strong>Gruleiru Newsletter</strong></label>
+              <br>
+              <input type="radio" id="all" name="type" value="Alle" checked="checked" style="accent-color: rgba(46, 167, 127, 0.89);"><label style="margin-left: 10px">Alle:</label><br>
+              <label>Ich möchte bei allen Veranstaltungen benachrichtigt werden</label>
+              <input disabled type="radio" id="algorithmus" name="type" value="Algorithmus" style="accent-color: rgba(46, 167, 127, 0.89); filter: blur(2px)"><label style="margin-left: 10px; filter: blur(2px)">Interesse:</label><br>
+              <label style="filter: blur(2px)">Ich möchte nur bei Veranstaltungen benachrichtigt werden, die meinen Interessen entsprechen</label><br>
+              <div class="form-group first">
+                <label for="username" id="lbl1">E-Mail</label>
+                <input type="text" class="form-control" id="username">
+
+              </div>
+              <div id="additionalInputs" style="display: none;">
+                <label>Katholisch:</label><br>
+                <input style="accent-color: rgba(46, 167, 127, 0.89);" type="radio" id="katholischJa" name="katholisch" value="Ja"><label style="margin-left: 10px" for="katholischJa">Ja</label><br>
+                <input style="accent-color: rgba(46, 167, 127, 0.89);" type="radio" id="katholischNein" name="katholisch" value="Nein"><label style="margin-left: 10px" for="katholischNein">Nein</label><br>
+
+                <label>Stadtteil:</label><br>
+                <input style="accent-color: rgba(46, 167, 127, 0.89);" type="radio" id="stadt1" name="stadt" value="Stadt1"><label style="margin-left: 10px" for="stadt1">Kaiserswerth</label><br>
+                <input style="accent-color: rgba(46, 167, 127, 0.89);" type="radio" id="stadt2" name="stadt" value="Stadt2"><label style="margin-left: 10px" for="stadt2">Witlaer</label><br>
+                <input style="accent-color: rgba(46, 167, 127, 0.89);" type="radio" id="stadt3" name="stadt" value="Stadt3"><label style="margin-left: 10px" for="stadt3">Kalkum</label><br>
+                <input style="accent-color: rgba(46, 167, 127, 0.89);" type="radio" id="stadt4" name="stadt" value="Stadt4"><label style="margin-left: 10px" for="stadt4">Angermund</label><br>
+
+<!--                <label>Alter:</label><br>-->
+                <div class="form-group first">
+                  <label for="username" id="ageLabel">Alter</label>
+                  <input type="text" class="form-control" id="age"></div>
+              </div>
+              <input type="button" value="Anmelden" class="btn btn-pill text-white btn-block btn-primary" id="bbbtn1" onclick="news();"><br>
+              <label>Für weitere Informationen zum Daten-Analyse-Algorithmus und wie ihre Daten verarbeitet werden, lesen Sie bitte die <a href="policy" style="color: rgba(46, 167, 127, 0.89);">Datenschutzbestimmung</a></label></div>
+              <script>
+                document.getElementById('algorithmus').addEventListener('change', function() {
+                  document.getElementById('additionalInputs').style.display = this.checked ? 'block' : 'none';
+                });
+                document.getElementById('all').addEventListener('change', function() {
+                  document.getElementById('additionalInputs').style.display = this.checked ? 'none' : 'block';
+                });
+                function news() {
+                  if (document.getElementById("all").checked == true) {
+                    var type = "all"
+                  } else {
+                    var type = "smart"
+                  }
+                  var HTTP = new XMLHttpRequest();
+                  var url = "https://regapi.gruleiru.de/newsletter?email=" + document.getElementById("username").value + "&type=" + type;
+                  HTTP.open("GET", url);
+                  HTTP.send();
+                  HTTP.onload = (e) => {
+                    response = HTTP.responseText;
+                    if (response == "ok") {
+                      window.location.href = "https://gruleiru.de/newsscss"
+                    } else {
+                      window.location.href = "https://gruleiru.de/newserror"
+                    }
+                  }
+                }
+              </script>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+<script src="js/jquery-3.3.1.min.js"></script>
+<script src="js/popper.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script>
+  $(function () {
+    'use strict';
+
+
+    $('.form-control').on('input', function () {
+      var $field = $(this).closest('.form-group');
+      if (this.value) {
+        $field.addClass('field--not-empty');
+      } else {
+        $field.removeClass('field--not-empty');
+      }
+    });
+
+  });
+</script>
+
+</body>
+</html>

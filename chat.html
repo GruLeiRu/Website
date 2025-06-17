@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="fonts/icomoon/style.css">
+
+    <link rel="stylesheet" href="css/owl.carousel.min.css">
+
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <title>Gruleiru Chat System</title>
+    <script>
+        allowTheme = true
+        if (allowTheme == true) {
+            if (localStorage.getItem("theme") == "dark-mode") {
+                const addCSS = css => document.head.appendChild(document.createElement("style")).innerHTML = css;
+
+                addCSS(`html:not(#ente){filter: invert(1) hue-rotate(180deg);}#ente{filter: invert(1) hue-rotate(180deg);}`)
+            } else {
+            }
+        }
+    </script>
+</head>
+<body>
+<script src="js/jquery-3.3.1.min.js"></script>
+<div class="alert" style="display: none">
+    <p class="alert-text">Error</p>
+    <button class="alert-close-button">Verbinden</button>
+</div>
+<div id="mainbar"
+     style="line-height: 53px; height:60px; width: 95%; background-color: rgb(255, 255, 255); margin: auto; margin-top: 15px; border-radius: 10px; box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.1); margin-bottom: 20px;">
+    <img src="images/ente.png" style="height:50px; margin-left: 10px;" class="ente" id="ente">
+    <ul id="adc" style="margin-top: -65px;">
+        <a href="https://server.gruleiru.de/main" id="imghref"><div style="width: 60px;"></div></a>
+    </ul>
+</div>
+
+<div id="chatbox" style="line-height: 53px;  width: 95%; background-color: rgb(255, 255, 255); margin: auto; margin-top: 15px; border-radius: 10px; box-shadow: 3px 5px 5px 2px rgba(0,0,0,0.13); margin-bottom: 20px;">
+
+    <ul id="messages">
+    </ul>
+</div>
+
+<form id="chatForm">
+    <div class="message-container" style="display: none">
+        <span class="username">User1:</span>
+        <span class="typing-indicator" style="display: none">Typing...</span>
+    </div>
+    <div style="line-height: 53px; height:70px; width: 95%; background-color: rgb(255, 255, 255); margin: auto; margin-top: 15px; border-radius: 10px; box-shadow: 3px 5px 5px 2px rgba(0,0,0,0.13); margin-bottom: 20px;">
+        <input type="text" id="message" placeholder="Enter your message" style="color: black; height: 50px; width: 70%; margin-top: 10px; margin-left: 10px">
+        <button type="submit" style="height: 50px; width: 80px; margin-top: 10px; line-height: 30px; float: right; margin-right: 10px;">Senden</button>
+    </div>
+    <div style="line-height: 53px; height:60px; width: 65%; background-color: rgb(255, 255, 255); margin: auto; margin-top: 15px; border-radius: 10px; margin-bottom: 20px;">
+
+    </div>
+
+
+    <script>
+        let typingIndicator = document.querySelector(".typing-indicator");
+        input = document.querySelector("#message");
+        input.addEventListener("keydown", function() {
+            typingIndicator.style.display = "none";
+        });
+
+        input.addEventListener("keyup", function() {
+            let typingTimeout = setTimeout(function() {
+                typingIndicator.style.display = "none";
+            }, 2000);
+        });
+    </script>
+
+</form>
+
+
+<script>
+    const websocket = new WebSocket("wss://websocket0.pauli1panter.de");
+    const websocket2 = new WebSocket("wss://websocket1.pauli1panter.de");
+    const closeButton = document.querySelector('.alert-close-button');
+    const alert = document.querySelector('.alert');
+    const alertText = document.querySelector('.alert-text');
+    closeButton.addEventListener('click', function() {
+        window.location.reload()
+        alert.style.display = 'none';
+    });
+
+    usernameInput = null
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const session = urlParams.get('sid')
+    const cid = urlParams.get('cid')
+    document.getElementById("imghref").setAttribute("href", "https://www.gruleiru.de/panel?sid=" + session)
+    if(session == null) {
+        alertText.innerHTML = "Ungültige Session ID";
+        alert.style.display = 'block';
+        console.log("No session id provided");
+    } else if(cid == null) {
+        alertText.innerHTML = "Ungültige Chat ID";
+        alert.style.display = 'block';
+        console.log("No session id provided");
+    }else {
+
+        function emojiToUnicode(text) {
+            var arr = Array.from(text);
+            var unicodeArr = [];
+            for (let i = 0; i < arr.length; i++) {
+                var unicode = arr[i].codePointAt(0).toString(16);
+                unicodeArr.push(unicode);
+            }
+            return unicodeArr.join(" ");
+        }
+
+        function unicodeToEmoji(text) {
+            var origText = text;
+            try {
+                var unicodearr = text.split(" ");
+                var emojis = "";
+                for (let i = 0; i < unicodearr.length; i++) {
+                    var emoji = String.fromCodePoint(parseInt(unicodearr[i], 16));
+                    emojis += emoji;
+                }
+                return emojis;
+            } catch (e) {
+                return origText;
+            }
+        }
+
+        function send(message) {
+            if(message!="") {
+                function censorBadWords(input) {
+                    const badWords = [''];
+                    const censored = badWords.reduce((acc, word) => acc.replace(word, '*'.repeat(word.length)), input);
+                    return censored;
+                }
+                message = censorBadWords(message);
+                message = emojiToUnicode(message);
+                console.log("Sending message: " + message);
+                mid = btoa(crypto.randomUUID())
+                websocket.send(JSON.stringify({"type": "message", "message": btoa(message), "session": btoa(session + ""), "mid": mid, "cid": cid}));
+            }
+        }
+
+        function remove(message) {
+            console.log("Removing message: " + message);
+            websocket.send(JSON.stringify({"type": "removemsg", "session": btoa(session + ""), "mid": btoa(message)}));
+        }
+
+        websocket.onopen = function(event) {
+            console.log("Starting WebSocket Connection");
+            websocket.send(JSON.stringify({
+                "type": "join",
+                "session":  btoa(session + ""),
+                "chat": cid
+            }));
+
+        };
+        websocket2.onopen = function(event) {
+            websocket2.send(JSON.stringify({"type": "req", "chat": cid}));
+
+        };
+        websocket.onmessage = function(event) {
+            console.log(event.data);
+            if(JSON.parse(event.data)["type"] == "chats") {
+                console.log(event.data)
+                for(let i = 0; i < JSON.parse(event.data)["chats"].length; i++) {
+                    let messageContainer = document.createElement("div");
+                    name = JSON.parse(event.data)["chats"][i]["name"]
+                    id = JSON.parse(event.data)["chats"][i]["id"]
+                    if(cid == id || id == "public") {
+                        if(cid == id){ ObjClass = "active" }else{ ObjClass = ""}
+                        document.getElementById("adc").innerHTML += `<li class='${ObjClass}' ><a style="margin-top: -15px;" href='chat?sid=` + session + `&cid=` + id + `'>` + name + `</a></li>`;
+                    }
+                }
+            }
+            if(JSON.parse(event.data)["type"] == "username") {
+                usernameInput = JSON.parse(event.data)["username"]
+            }
+            if(JSON.parse(event.data)["type"] == "fchat") {
+                $("div.message-container").remove();
+                 for(let i = 0; i < JSON.parse(event.data)["chat"].length; i++) {
+                     let messageContainer = document.createElement("div");
+                     if(atob(JSON.parse(event.data)["chat"][i]["user"]) == usernameInput) {
+                         messageContainer.classList.add("message-container", "other-user-message");
+                         messageContainer.addEventListener('contextmenu', e => {
+                             e.preventDefault();
+                             contextMenu.style.display = "block";
+                             contextMenu.style.left = `${e.clientX}px`;
+                             contextMenu.style.top = `${e.clientY}px`;
+                             contextMenu.style.borderRadius = `10px`
+                             contextMenu.style.borderColor = `white`
+                             contextMenu.style.boxShadow = `10px 10px 10px 0 rgba(0, 0, 0, 0.1)`
+
+                             const deleteMessageOption = document.querySelector('#delete-message');
+                             deleteMessageOption.addEventListener('click', () => {
+
+                                 messageContainer.remove();
+                                 remove(atob(JSON.parse(event.data)["chat"][i]["mid"]));
+                                 contextMenu.style.display = "none";
+                             });
+                         });
+
+                         messageContainer.innerHTML = "<p style='font-family: Arial, sans-serif; padding-left: 5px; color: white; line-height: 22px;'>" + atob(JSON.parse(event.data)["chat"][i]["user"]) + ": " + unicodeToEmoji(atob(JSON.parse(event.data)["chat"][i]["message"])) + "</p>";
+
+                     } else {
+                         messageContainer.classList.add("message-container", "current-user-message");
+                         messageContainer.innerHTML = "<p style='font-family: Arial, sans-serif; padding-left: 5px; color: black; line-height: 22px;'>" + atob(JSON.parse(event.data)["chat"][i]["user"]) + ": " + unicodeToEmoji(atob(JSON.parse(event.data)["chat"][i]["message"])) + "</p>";
+
+                     }
+                     messagesContainer = document.getElementById("chatbox")
+                     messagesContainer.appendChild(messageContainer);
+                 }
+            }
+        };
+
+        websocket2.onmessage = function(event) {
+            console.log(event.data);
+            if(JSON.parse(event.data)["type"] == "fchat") {
+                $("div.message-container").remove();
+                if(JSON.parse(event.data)["chat"] == null) {
+                    return
+                } else {
+                    for(let i = 0; i < JSON.parse(event.data)["chat"].length; i++) {
+                        let messageContainer = document.createElement("div");
+                        if(atob(JSON.parse(event.data)["chat"][i]["user"]) == usernameInput) {
+                            messageContainer.classList.add("message-container", "other-user-message");
+                            messageContainer.addEventListener('contextmenu', e => {
+                                e.preventDefault();
+                                contextMenu.style.display = "block";
+                                contextMenu.style.left = `${e.clientX}px`;
+                                contextMenu.style.top = `${e.clientY}px`;
+                                contextMenu.style.borderRadius = `10px`
+                                contextMenu.style.borderColor = `white`
+                                contextMenu.style.boxShadow = `10px 10px 10px 0 rgba(0, 0, 0, 0.1)`
+
+                                const deleteMessageOption = document.querySelector('#delete-message');
+                                deleteMessageOption.addEventListener('click', () => {
+                                    messageContainer.remove();
+                                    remove(atob(JSON.parse(event.data)["chat"][i]["mid"]));
+                                    contextMenu.style.display = "none";
+                                });
+                            });
+                            messageContainer.innerHTML = "<p style='font-family: Arial, sans-serif; padding-left: 5px; color: white; line-height: 22px;'>" + atob(JSON.parse(event.data)["chat"][i]["user"]) + ": " + unicodeToEmoji(atob(JSON.parse(event.data)["chat"][i]["message"])) + "</p>";
+
+                        } else {
+                            messageContainer.classList.add("message-container", "current-user-message");
+                            messageContainer.innerHTML = "<p style='font-family: Arial, sans-serif; padding-left: 5px; color: black; line-height: 22px;'>" + atob(JSON.parse(event.data)["chat"][i]["user"]) + ": " + unicodeToEmoji(atob(JSON.parse(event.data)["chat"][i]["message"])) + "</p>";
+
+                        }
+                        messagesContainer = document.getElementById("chatbox")
+                        messagesContainer.appendChild(messageContainer);
+                    }
+                }
+
+            }
+        };
+
+        websocket2.onerror = function(error) {
+            console.log("WebSocket Error: ", error);
+            alertText.innerHTML = "Es ist ein unerwarteter Fehler aufgetreten: " + error + "";
+            alert.style.display = 'block';
+
+        };
+
+        websocket2.onclose = function(event) {
+            console.log("WebSocket Closed");
+            alertText.innerHTML = "Verbindung zum Server wurde getrennt"
+            alert.style.display = 'block';
+        };
+
+        websocket.onerror = function(error) {
+            console.log("WebSocket Error: ", error);
+            alertText.innerHTML = "Es ist ein unerwarteter Fehler aufgetreten: " + error + "";
+            alert.style.display = 'block';
+
+        };
+
+        websocket.onclose = function(event) {
+            console.log("WebSocket Closed");
+            alertText.innerHTML = "Verbindung zum Server wurde getrennt"
+            alert.style.display = 'block';
+        };
+    }
+
+    const chatForm = document.querySelector('#chatForm');
+    const messagesList = document.querySelector('#messages');
+    const messageInput = document.querySelector('#message');
+
+
+    const contextMenu = document.createElement('div');
+    contextMenu.id = "context-menu";
+    contextMenu.style.display = "none";
+    contextMenu.innerHTML = `
+  <ul>
+    <li id="delete-message" style="font-family: Arial, sans-serif;">Nachricht Löschen</li>
+  </ul>
+`;
+
+    document.body.appendChild(contextMenu);
+
+    document.addEventListener('click', e => {
+        contextMenu.style.display = "none";
+    });
+
+    chatForm.addEventListener("submit", function(e) {
+        e.preventDefault();
+
+        const username = usernameInput;
+        let message = input.value;
+        let isCurrentUser = false; // change this value based on your logic
+
+        let messageContainer = document.createElement("div");
+        messageContainer.classList.add("message-container");
+
+        if(message != "") {
+            if (isCurrentUser) {
+                messageContainer.classList.add("current-user-message");
+            } else {
+                messageContainer.classList.add("other-user-message");
+            }
+            messageContainer.innerHTML = "<p style='font-family: Arial, sans-serif; padding-left: 5px; color: white;'>" + username + ": " + message + "</p>";
+        }
+
+        send(message);
+        messagesContainer = document.getElementById("chatbox")
+        messagesContainer.appendChild(messageContainer);
+
+        messageContainer.addEventListener('contextmenu', e => {
+                    e.preventDefault();
+                    contextMenu.style.display = "block";
+                    contextMenu.style.left = `${e.clientX}px`;
+                    contextMenu.style.top = `${e.clientY}px`;
+                    contextMenu.style.borderRadius = `10px`
+                    contextMenu.style.borderColor = `white`
+                    contextMenu.style.boxShadow = `10px 10px 10px 0 rgba(0, 0, 0, 0.1)`
+
+                    const deleteMessageOption = document.querySelector('#delete-message');
+                    deleteMessageOption.addEventListener('click', () => {
+                        messageContainer.remove();
+                        contextMenu.style.display = "none";
+                    });
+                });
+
+        input.value = "";
+    });
+
+    const navLinks = document.querySelectorAll("nav a");
+
+    navLinks.forEach(link => {
+        link.addEventListener("click", () => {
+            navLinks.forEach(link => {
+                link.classList.remove("active");
+            });
+            link.classList.add("active");
+        });
+    });
+
+    // chatForm.addEventListener('submit', e => {
+    //     e.preventDefault();
+    //     const username = usernameInput.value;
+    //     const message = messageInput.value;
+    //     const newMessage = document.createElement('li');
+    //     newMessage.innerHTML = `${username}: ${message}`;
+    //
+    //     newMessage.addEventListener('contextmenu', e => {
+    //         e.preventDefault();
+    //         contextMenu.style.display = "block";
+    //         contextMenu.style.left = `${e.clientX}px`;
+    //         contextMenu.style.top = `${e.clientY}px`;
+    //         contextMenu.style.borderRadius = `10px`
+    //         contextMenu.style.borderColor = `white`
+    //         contextMenu.style.boxShadow = `10px 10px 10px 0 rgba(0, 0, 0, 0.1)`
+    //
+    //         const deleteMessageOption = document.querySelector('#delete-message');
+    //         deleteMessageOption.addEventListener('click', () => {
+    //             newMessage.remove();
+    //             contextMenu.style.display = "none";
+    //         });
+    //     });
+    //
+    //     messagesList.appendChild(newMessage);
+    //
+    //     messageInput.value = '';
+    // });
+
+</script>
+</body>
+<style>
+
+    ::-webkit-scrollbar {
+        width: 12px;
+        height: 12px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        border-radius: 10px;
+        background-color: #38d39f;
+    }
+
+    .active {
+        background-color: white;
+        box-shadow: 0px 0px 10px 0px #ccc;
+        border-radius: 10px;
+        height: 50px;
+    }
+
+    nav {
+        margin-top: 10px;
+        display: flex;
+        justify-content: center;
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0px 0px 10px 0px #ccc;
+        margin-bottom: 20px;
+        font-family: Arial, sans-serif;
+    }
+
+    ul {
+        display: flex;
+        list-style: none;
+        padding: 10px;
+        margin: 0;
+    }
+
+    li {
+        flex-grow: 1;
+        text-align: center;
+    }
+
+    a {
+        display: block;
+        padding: 10px;
+        color: black;
+        text-decoration: none;
+    }
+
+    .alert {
+        background-color: #f2f2f2;
+        border-radius: 10px;
+        padding: 20px;
+        text-align: center;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        box-shadow: 0px 0px 10px 0px #ccc;
+    }
+
+    .alert-text {
+        font-size: 18px;
+        margin-bottom: 10px;
+    }
+
+    .alert-close-button {
+        background-color: #ff0000;
+        border: none;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 10px;
+        cursor: pointer;
+    }
+
+    .message-container {
+        margin: 10px 0;
+        padding: 5px;
+        border-radius: 10px;
+        font-size: 17px;
+    }
+    .other-user-message {
+        width: 65%;
+        background-color: #38d39f;
+        box-shadow: 0px 0px 10px 0px #ccc;
+        align-self: flex-end;
+        margin-left: auto;
+    }
+    .current-user-message {
+        width: 65%;
+        background-color: white;
+        align-self: flex-start;
+        margin-right: auto;
+        box-shadow: 0px 0px 10px 0px #ccc;
+    }
+</style>
+<style>
+    .message-container {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+    .username {
+        margin-right: 10px;
+        font-family: Arial, sans-serif;
+    }
+    .typing-indicator {
+        font-family: Arial, sans-serif;
+        font-size: 12px;
+        color: gray;
+    }
+</style>
+
+<style>
+    body {
+        background-color: white;
+    }
+
+
+    #context-menu {
+        position: absolute;
+        background-color: white;
+        border: 1px solid gray;
+        padding: 10px;
+        z-index: 1;
+    }
+
+    #context-menu ul {
+        font-family: Arial, sans-serif;
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    #context-menu li {
+        cursor: pointer;
+    }
+
+    #chatbox {
+        width: auto;
+        height: 60vh;
+        overflow-y: scroll;
+        border: none;
+        border-radius: 10px;
+        background-color: white;
+        padding: 20px;
+        margin-bottom: 10px;
+    }
+
+
+    #chatForm input[type="text"] {
+        height: 3vh;
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid rgb(255, 255, 255);
+        border-radius: 10px;
+    }
+
+    #chatForm button[type="submit"] {
+        height: 5vh;
+        width: 100%;
+        padding: 10px;
+        background-color: #38d39f;
+        color: white;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        box-shadow: 10px 10px 10px 0 rgba(0, 0, 0, 0.1)
+    }
+
+    #messages li {
+        list-style-type: none;
+        margin: 10px 0;
+        padding: 10px;
+        background-color: #38d39f;
+        color: white;
+        border-radius: 10px;
+        box-shadow: 10px 10px 10px 0 rgba(0, 0, 0, 0.1)
+    }
+</style>
+</html>

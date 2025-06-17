@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Generate Playlist</title>
+    <style>
+        @font-face {
+            font-family: 'CustomFont';
+            src: url('./fonts/GT America Extended Bold.otf') format('otf'),
+                 url('./fonts/GT America Extended Regular.otf') format('otf');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        body {
+            font-family: 'GT America', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            font-size: 1.5em; /* Increase base font size */
+            background: #121212 linear-gradient(to top, #381005 0%, #121212 30%);
+            color: #b3b3b3;
+
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            font-size: 80px; /* Increase heading size */
+            color: white;
+        }
+
+        input {
+            padding: 15px;
+            /* margin-bottom: 15px; */
+            font-size: 45px; /* Increase input text size */
+            text-align: center;
+            font-weight: bold;
+            border-radius: 100px;
+
+        }
+
+        button {
+            padding: 15px;
+            margin-bottom: 15px;
+            font-size: 40px; /* Increase button text size */
+            border-bottom-left-radius: 30px;
+            border-bottom-right-radius: 30px;
+            background-color: #e74113;
+            color: white;
+            font-weight: bold;
+        }
+
+        p {
+            margin-top: 20px;
+            font-size: 1.2em; /* Increase paragraph text size */
+        }
+
+        a {
+            color: #e74113;
+        }
+
+        footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            padding: 10px;
+            background-color: #121212;
+        }
+        #frame {
+            margin-top: 20px;
+            width: 100vw;
+            text-align: center;
+            height: 352px;
+        }
+    </style>
+    <script>
+        async function generatePlaylist() {
+            const inputText = document.getElementById('inputText').value;
+            const response = await fetch('https://api.freibiervorvier.de/generate_playlist', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ input_text: inputText })
+            });
+            const result = await response.json();
+            if (result.error === "2") {
+                document.getElementById('result').innerHTML = result.message + " | login <a href='https://api.freibiervorvier.de/login'>here</a> and try again";
+            } else {
+                document.getElementById('result').innerText = result.message;
+            }
+
+            // Extract the playlist URL from the result message
+            if (result.error === "0") {
+                const playlist = result.playlist_code;
+                document.getElementById('frame').innerHTML = `
+                <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/${playlist}?utm_source=generator&theme=0" width="80%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+                `;
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>Generate Playlist</h1>
+    <input type="text" id="inputText" placeholder="Enter your text here">
+    <button onclick="generatePlaylist()">Generate</button>
+    <p id="result">Keep it short and use keywords like genres</p>
+    <div id="frame">
+    </div>
+    <footer>
+        <p>Powered by Spotify® & JetBrains®</p>
+    </footer>
+</body>
+</html>

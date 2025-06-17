@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="de">
+
+<head>
+  <script src="https://www.google.com/recaptcha/api.js"></script>
+  <meta charset="utf-8">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="fonts/icomoon/style.css">
+
+  <link rel="stylesheet" href="css/owl.carousel.min.css">
+
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+
+  <link rel="stylesheet" href="css/style.css">
+
+  <title>Feedback</title>
+
+</head>
+
+<body>
+<div class="content">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-6 contents">
+        <div class="row justify-content-center">
+          <div class="col-md-12">
+            <div class="form-block" id="block">
+              <div class="mb-4">
+                <h3><strong>Feedback</strong> QR</h3>
+              </div>
+
+              <label for="st" id="st">Scannen sie den QR Code um ein Feedback zu hinterlassen</label>
+              <div id="imgct"></div>
+              <script>
+                const queryString = window.location.search;
+                const urlParams = new URLSearchParams(queryString);
+                const id = urlParams.get('id')
+                document.getElementById("imgct").innerHTML = `<img src="https://regapi.gruleiru.de/reqfeedback?id=${id}" style="width: 100%; height: 100%;">`;
+              </script>
+              <!--                                <input type="button" value="Key ansehen"-->
+              <!--                                    class="btn btn-pill text-white btn-block btn-primary" id="theme"-->
+              <!--                                    onclick="permSession()">-->
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+</div>
+
+<script src="js/jquery-3.3.1.min.js"></script>
+<script src="js/popper.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/permesssion.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="de">
+  <link rel="icon" href="images/favicon.ico" />
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-YDZ6CT5KD4"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'G-YDZ6CT5KD4');
+  </script>
+  <meta charset="utf-8">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="fonts/icomoon/style.css">
+
+  <link rel="stylesheet" href="css/owl.carousel.min.css">
+
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+
+  <link rel="stylesheet" href="css/style.css">
+
+  <title>Panel</title>
+</head>
+
+<body>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+  <div id="mainbar"
+    style="line-height: 53px; height:60px; width: 95%; background-color: rgb(255, 255, 255); margin: auto; margin-top: 15px; border-radius: 10px; box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.1);">
+    <a href="https://www.gruleiru.de/main.html"><img src="images/ente.png" style="height:50px; margin-left: 10px;" class="ente" id="ente"></a>
+    <span style="line-height: normal; display: inline-block; vertical-align: middle; margin-left: 10px;"><a
+        style="color: black;" id="reminder" href="https://www.google.com">Termine</a></span>
+    <!--span style="line-height: normal; display: inline-block; vertical-align: middle; margin-left: 20px;"><a style="color: black;" id="pictures" href="https://gruleiru.de">Fotoalbum</a></span>-->
+    <!--span style="line-height: normal; display: inline-block; vertical-align: middle; margin-left: 20px;"><a style="color: black;" id="settings" href="https://www.google.com">Einstellungen</a></span>-->
+    <span style="line-height: normal; display: inline-block; vertical-align: middle; margin-left: 20px;"><a
+        style="color: black;" id="invites" href="https://www.google.com">Support</a></span>
+    <span style="line-height: normal; display: inline-block; vertical-align: middle; margin-left: 20px;"><a
+        style="color: black;" id="hefa" href="https://www.google.com">HeFa</a></span>
+    <div id="drop" class="drop"
+      style="height: 60px; width: 70px; border-radius: 10px; background-color: rgb(255, 255, 255); box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.1); float: right;">
+      <a id="more"><img src="images/more.png"
+          style="height: 30px; float: right; margin-top: 13px; margin-right: 20px;"></a>
+      <a href="https://www.google.com" id="settings"><img src="images/set.png"
+          style="height: 30px; float: right; margin-top: 20px; margin-right: 20px;"></a>
+      <a onclick="Logout('temp')" id="logout" class="logout"><img src="images/logout.png"
+          style="height: 30px; float: right; margin-top: 20px; margin-right: 19px;"></a>
+    </div>
+
+  </div>
+  <script>
+    ext = "160"
+    function mobile() {
+      var userAgent = navigator.userAgent;
+      if (userAgent.match(/Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i)) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+    if (mobile() == true) {
+      ext = "205"
+      document.getElementById("mainbar").innerHTML = `
+      <a href="https://www.gruleiru.de/main.html"><img src="images/ente.png" style="height:50px; margin-left: 10px;" class="ente" id="ente"></a>
+    <span style="line-height: normal; display: inline-block; vertical-align: middle; margin-left: 10px;"><a
+        style="color: black;" id="reminder" href="https://www.google.com">Termine</a></span>
+    <!--span style="line-height: normal; display: inline-block; vertical-align: middle; margin-left: 20px;"><a style="color: black;" id="pictures" href="https://gruleiru.de">Fotoalbum</a></span>-->
+    <!--span style="line-height: normal; display: inline-block; vertical-align: middle; margin-left: 20px;"><a style="color: black;" id="settings" href="https://www.google.com">Einstellungen</a></span>-->
+    <span style="line-height: normal; display: inline-block; vertical-align: middle; margin-left: 20px;"><a
+        style="color: black;" id="hefa" href="https://www.google.com">HeFa</a></span>
+    <a href="https://www.dropbox.com/scl/fo/ka6jnvb837dyuwkdi0w1s/h?dl=0&rlkey=giihr4pwablkueo3dodj2ry9u" id="dropbox" class="dropbox"><img src="images/dropbox.png"
+          style="height: 30px; margin-left: 19px;"></a>
+    <div id="drop" class="drop"
+      style="height: 60px; width: 70px; border-radius: 10px; background-color: rgb(255, 255, 255); box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.1); float: right;">
+      <a id="more"><img src="images/more.png"
+          style="height: 30px; float: right; margin-top: 13px; margin-right: 20px;"></a>
+      <a href="https://www.google.com" id="settings"><img src="images/set.png"
+          style="height: 30px; float: right; margin-top: 20px; margin-right: 20px;"></a>
+      <a href="https://www.google.com" id="invites" class="logout"><img src="images/invitation.png"
+          style="height: 30px; float: right; margin-top: 20px; margin-right: 20px;"></a>
+      <a onclick="Logout('temp')" id="logout" class="logout"><img src="images/logout.png"
+          style="height: 30px; float: right; margin-top: 20px; margin-right: 19px;"></a>
+      `
+    } else {
+      document.getElementById("mainbar").innerHTML = `<a href="https://www.gruleiru.de/main.html"><img src="images/ente.png" style="height:50px; margin-left: 10px;" class="ente" id="ente"></a>
+    <span style="line-height: normal; display: inline-block; vertical-align: middle; margin-left: 10px;"><a
+        style="color: black;" id="reminder" href="https://www.google.com">Termine</a></span>
+    <!--span style="line-height: normal; display: inline-block; vertical-align: middle; margin-left: 20px;"><a style="color: black;" id="pictures" href="https://gruleiru.de">Fotoalbum</a></span>-->
+    <!--span style="line-height: normal; display: inline-block; vertical-align: middle; margin-left: 20px;"><a style="color: black;" id="settings" href="https://www.google.com">Einstellungen</a></span>-->
+    <span style="line-height: normal; display: inline-block; vertical-align: middle; margin-left: 20px;"><a
+        style="color: black;" id="invites" href="https://www.google.com">Support</a></span>
+    <span style="line-height: normal; display: inline-block; vertical-align: middle; margin-left: 20px;"><a
+        style="color: black;" id="hefa" href="https://www.google.com">HeFa</a></span>
+    <span style="line-height: normal; display: inline-block; vertical-align: middle; margin-left: 20px;"><a
+        style="color: black;" id="db" href="https://www.dropbox.com/scl/fo/ka6jnvb837dyuwkdi0w1s/h?dl=0&rlkey=giihr4pwablkueo3dodj2ry9u">Dropbox</a></span>
+    <div id="drop" class="drop"
+      style="height: 60px; width: 70px; border-radius: 10px; background-color: rgb(255, 255, 255); box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.1); float: right;">
+      <a id="more"><img src="images/more.png"
+          style="height: 30px; float: right; margin-top: 13px; margin-right: 20px;"></a>
+      <a href="https://www.google.com" id="settings"><img src="images/set.png"
+          style="height: 30px; float: right; margin-top: 20px; margin-right: 20px;"></a>
+      <a onclick="Logout('temp')" id="logout" class="logout"><img src="images/logout.png"
+          style="height: 30px; float: right; margin-top: 20px; margin-right: 19px;"></a>`
+    }
+    animating = false
+    animatingout = false
+    $(".drop").animate({
+      height: '60'
+    })
+    $('.drop').hover(function () {
+      if (animatingout == true) {
+        animating = true
+        $(this).stop()
+        $(this).animate({
+          height: ext
+        }, function () {
+          animatingout = false
+          animating = true
+        })
+      }
+
+
+      if (animating == false) {
+        animating = true
+        $(this).animate({
+          height: ext
+        }, function () {
+          animating = false
+        })
+      }
+    })
+    $('.drop').mouseleave(function () {
+      animatingout = true
+      $(this).stop()
+      $(this).animate({
+        height: '60'
+      }, function () {
+        animatingout = false
+        animating = false
+      })
+    })
+  </script>
+
+  <div class="content">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-md-6 contents">
+          <div class="row justify-content-center">
+            <div class="col-md-12">
+              <div class="form-block" id="block">
+                <div class="mb-4">
+                  <h3>Einstellungs <strong class="nwtxt">Panel</strong></h3>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script src="js/settings.js"></script>
+  <div id="toast">Es ist ein Fehler beim Laden der Benachrichtigung aufgetreten!</div>
+  <style>
+    #toast {
+      visibility: hidden;
+      min-width: 250px;
+      margin-left: -125px;
+      background-color: rgba(77, 216, 169, 0.84);
+      color: #fff;
+      text-align: center;
+      border-radius: 50px;
+      padding: 16px;
+      position: fixed;
+      z-index: 1;
+      left: 50%;
+      bottom: 30px;
+      font-size: 17px;
+      animation-fill-mode: forwards;
+    }
+
+    #toast.show {
+      visibility: visible;
+      -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+      animation: fadein 0.5s, fadeout 0.5s 2.5s;
+      animation-fill-mode: forwards;
+    }
+
+    @-webkit-keyframes fadein {
+      from {bottom: 0; opacity: 0;}
+      to {bottom: 30px; opacity: 1;}
+    }
+
+    @keyframes fadein {
+      from {bottom: 0; opacity: 0;}
+      to {bottom: 30px; opacity: 1;}
+    }
+
+    @-webkit-keyframes fadeout {
+      from {bottom: 30px; opacity: 1;}
+      to {bottom: 0; opacity: 0;}
+    }
+  </style>
+</body>
+
+</html>

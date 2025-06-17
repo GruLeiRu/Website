@@ -1,0 +1,384 @@
+<!doctype html>
+<html lang="de">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="fonts/icomoon/style.css">
+
+  <link rel="stylesheet" href="css/owl.carousel.min.css">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+
+  <!-- Style -->
+  <link rel="stylesheet" href="css/style.css">
+
+  <title>API Status</title>
+</head>
+
+<body>
+
+
+
+  <div class="content">
+    <div class="container">
+      <div class="row justify-content-center">
+        <!-- <div class="col-md-6 order-md-2">
+          <img src="images/undraw_file_sync_ot38.svg" alt="Image" class="img-fluid">
+        </div> -->
+        <div class="col-md-6 contents">
+          <div class="row justify-content-center">
+            <div class="col-md-12">
+              <div class="form-block" id="block">
+                <img id="pingTester" style="display: none">
+                <img id="pingTester2" style="display: none">
+                <img id="pingTester3" style="display: none">
+                <label class="error" id="error" style="color: black;">Loading... Please wait</label>
+                <div id="erroricon1"
+                  style="border-radius: 30px; width: 30px; height: 30px; background-color: rgb(255, 208, 0); margin-left: 300px; margin-top: -33px">
+                </div><br>
+                <label class="error" id="error2" style="color: black;">Loading... Please wait</label>
+                <div id="erroricon2"
+                  style="border-radius: 30px; width: 30px; height: 30px; background-color: rgb(255, 208, 0); margin-left: 300px; margin-top: -33px">
+                </div><br>
+                <label class="error" id="error3" style="color: black;">Loading... Please wait</label>
+                <div id="erroricon3"
+                  style="border-radius: 30px; width: 30px; height: 30px; background-color: rgb(255, 208, 0); margin-left: 300px; margin-top: -33px">
+                </div><br>
+                <label class="error" id="error4" style="color: black;">Loading... Please wait</label>
+                <div id="erroricon4"
+                  style="border-radius: 30px; width: 30px; height: 30px; background-color: rgb(255, 208, 0); margin-left: 300px; margin-top: -33px">
+                </div><br>
+                <label class="error" id="error5" style="color: black;">Loading... Please wait</label>
+                <div id="erroricon5"
+                     style="border-radius: 30px; width: 30px; height: 30px; background-color: rgb(255, 208, 0); margin-left: 300px; margin-top: -33px">
+                </div><br>
+                <label class="error" id="error6" style="color: black;">Loading... Please wait</label>
+                <div id="erroricon6"
+                     style="border-radius: 30px; width: 30px; height: 30px; background-color: rgb(255, 208, 0); margin-left: 300px; margin-top: -33px">
+                </div><br>
+                <label class="error" id="error7" style="color: black;">Loading... Please wait</label>
+                <div id="erroricon7"
+                     style="border-radius: 30px; width: 30px; height: 30px; background-color: rgb(255, 208, 0); margin-left: 300px; margin-top: -33px">
+                </div><br>
+                <label class="error" id="error8" style="color: black;">Loading... Please wait</label>
+                <div id="erroricon8"
+                     style="border-radius: 30px; width: 30px; height: 30px; background-color: rgb(255, 208, 0); margin-left: 300px; margin-top: -33px">
+                </div><br>
+                <label class="error" id="error9" style="color: black;">Loading... Please wait</label>
+                <div id="erroricon9"
+                     style="border-radius: 30px; width: 30px; height: 30px; background-color: rgb(255, 208, 0); margin-left: 300px; margin-top: -33px">
+                </div><br>
+                <label class="error" id="error10" style="color: black;">Loading... Please wait</label>
+                <div id="erroricon10"
+                     style="border-radius: 30px; width: 30px; height: 30px; background-color: rgb(255, 208, 0); margin-left: 300px; margin-top: -33px">
+                </div><br>
+                <label class="error" id="error11" style="color: black;">Loading... Please wait</label>
+                <div id="erroricon11"
+                     style="border-radius: 30px; width: 30px; height: 30px; background-color: rgb(255, 208, 0); margin-left: 300px; margin-top: -33px">
+                </div><br>
+                <label class="error" id="error12" style="color: black;">Loading... Please wait</label>
+                <div id="erroricon12"
+                     style="border-radius: 30px; width: 30px; height: 30px; background-color: rgb(255, 208, 0); margin-left: 300px; margin-top: -33px">
+                </div><br>
+                <label class="error" id="error13" style="color: black;">Loading... Please wait</label>
+                <div id="erroricon13"
+                     style="border-radius: 30px; width: 30px; height: 30px; background-color: rgb(255, 208, 0); margin-left: 300px; margin-top: -33px">
+                </div><br>
+
+              </div>
+              <div class="form-block" id="block2">
+                <span><strong>Logs:</strong></span><br>
+              </div>
+
+
+              <script>
+
+
+                var xhr = new XMLHttpRequest();
+                var sites = ["about.html", "advent.html", "anm.html", "anmeldung.html", "cal.html", "chat.html", "checkapi.html", "connected.html", "credits.html", "danke.html", "dev.html", "down.html", "error.html", "fbqr.html", "feedback.html", "foto.html", "fotos.html", "graphStats.html", "hefa.html", "help.html", "index.html", "invites.html", "key.html", "loggedin.html", "main.html", "members.html", "newserror.html", "newsletter.html", "newsscss.html", "noreason.html", "panel.html", "pban.html", "permsession.html", "policy.html", "public.html", "qr.html", "regout.html", "regoutev.html", "richtlinien.html", "settings.html", "shutdown.html", "speedreg.html", "speedsuccess.html", "spotify.html", "support.html", "ticket.html", "uid.html", "validate.html", "css/style.css", "js/anm.js", "js/anmeldung.js", "js/foto.js", "js/hefa.js", "js/invites.js", "js/main.js", "js/members.js", "js/panel.js", "js/permesssion.js", "js/public.js", "js/regout.js", "js/regoutev.js", "js/settingManager.js", "js/settings.js", "js/support.js"]
+                var lineCount = 0;
+                var charCount = 0;
+                var siteToCheck = 0;
+
+                function checkSites() {
+                  site = sites[siteToCheck];
+                  document.getElementById("block2").innerHTML += "checking site: " + site + "<br>";
+                  xhr.open("GET", site, true);
+
+                  xhr.onreadystatechange = function() {
+                    if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                      // Count the lines and characters
+                      lineCount += xhr.responseText.split("\n").length;
+                      charCount += xhr.responseText.length;
+
+                      if (siteToCheck < sites.length) {
+                        checkSites(); // Recursive call to check the next site
+                      }
+                    }
+                  };
+                  xhr.send();
+                  siteToCheck += 1;
+                  if (siteToCheck > sites.length - 1) {
+                    document.getElementById("block2").innerHTML += "done" + "<br>";
+                    document.getElementById("block2").innerHTML += "line count: " + lineCount + "<br>";
+                    document.getElementById("block2").innerHTML += "character count: " + charCount + "<br>";
+
+                    document.getElementById("error13").innerHTML = `Line count: ${lineCount}<br>Character count: ${charCount}<div style="border-radius: 30px; width: 30px; height: 30px; background-color: rgba(3, 187, 3, 0.692); margin-left: 300px; margin-top: -25px"></div>`;
+                    document.getElementById("erroricon13").style.height = "0px";
+                  }
+                }
+
+                checkSites();
+
+
+                try {
+                  const url = 'https://regapi.gruleiru.de'
+                  const Http = new XMLHttpRequest();
+                  Http.open("GET", url);
+                  Http.send();
+                  Http.onload = (e) => {
+                    document.getElementById("block2").innerHTML += "Reg-API: API is currently online" + "<br>"
+                    document.getElementById("error").innerHTML = `Reg-API: API is currently online <span id="pingSpan">...</span><div style="border-radius: 30px; width: 30px; height: 30px; background-color: rgba(3, 187, 3, 0.692); margin-left: 300px; margin-top: -25px"></div><br>`
+                    document.getElementById("erroricon1").style.height = "0px"
+                  }
+                  Http.onerror = function () {
+                    document.getElementById("block2").innerHTML += "Reg-API: API is currently offline" + "<br>"
+                    document.getElementById("error").innerHTML = `Reg-API: API is currently offline <div style="border-radius: 30px; width: 30px; height: 30px; background-color: rgba(248, 0, 0, 0.596); margin-left: 300px; margin-top: -25px"></div><br>`
+                    document.getElementById("erroricon1").style.height = "0px"
+                  }
+                } catch (e) {
+                  document.getElementById("block2").innerHTML += "Error: " + e + "<br>"
+                  document.getElementById("error").innerHTML = `Reg-API: API is currently offline <div style="border-radius: 30px; width: 30px; height: 30px; background-color: rgba(248, 0, 0, 0.596); margin-left: 300px; margin-top: -25px"></div><br>`
+                  document.getElementById("erroricon1").style.height = "0px"
+                }
+
+                try {
+                  const url = 'https://2fa.gruleiru.de'
+                  const Http = new XMLHttpRequest();
+                  Http.open("GET", url);
+                  Http.send();
+                  Http.onload = (e) => {
+                    document.getElementById("block2").innerHTML += "2FA-API: API is currently online" + "<br>"
+                    document.getElementById("error2").innerHTML = `2FA-API: API is currently online <span id="pingSpan2">...</span><div style="border-radius: 30px; width: 30px; height: 30px; background-color: rgba(3, 187, 3, 0.692); margin-left: 300px; margin-top: -25px"></div><br>`
+                    document.getElementById("erroricon2").style.height = "0px"
+                  }
+                  Http.onerror = function () {
+                    document.getElementById("block2").innerHTML += "2FA-API: API is currently offline" + "<br>"
+                    document.getElementById("error2").innerHTML = `2FA-API: API is currently offline <div style="border-radius: 30px; width: 30px; height: 30px; background-color: rgba(248, 0, 0, 0.596); margin-left: 300px; margin-top: -25px"></div><br>`
+                    document.getElementById("erroricon2").style.height = "0px"
+                  }
+                } catch (e) {
+                    document.getElementById("block2").innerHTML += "Error: " + e + "<br>"
+                  document.getElementById("error2").innerHTML = `2FA-API: API is currently offline <div style="border-radius: 30px; width: 30px; height: 30px; background-color: rgba(248, 0, 0, 0.596); margin-left: 300px; margin-top: -25px"></div><br>`
+                  document.getElementById("erroricon2").style.height = "0px"
+                }
+
+                try {
+                  const url = 'https://hefa.gruleiru.de'
+                  const Http = new XMLHttpRequest();
+                  Http.open("GET", url);
+                  Http.send();
+                  Http.onload = (e) => {
+                    document.getElementById("block2").innerHTML += "HeFa-API: API is currently online" + "<br>"
+                    document.getElementById("error3").innerHTML = `HeFa-API: API is currently online <span id="pingSpan3">...</span><div style="border-radius: 30px; width: 30px; height: 30px; background-color: rgba(3, 187, 3, 0.692); margin-left: 300px; margin-top: -25px"></div><br>`
+                    document.getElementById("erroricon3").style.height = "0px"
+                  }
+                  Http.onerror = function () {
+                    document.getElementById("block2").innerHTML += "HeFa-API: API is currently offline" + "<br>"
+                    document.getElementById("error3").innerHTML = `HeFa-API: API is currently offline <div style="border-radius: 30px; width: 30px; height: 30px; background-color: rgba(248, 0, 0, 0.596); margin-left: 300px; margin-top: -25px"></div><br>`
+                    document.getElementById("erroricon3").style.height = "0px"
+                  }
+                } catch (e) {
+                    document.getElementById("block2").innerHTML += "Error: " + e + "<br>"
+                  document.getElementById("error3").innerHTML = `HeFa-API: API is currently offline <div style="border-radius: 30px; width: 30px; height: 30px; background-color: rgba(248, 0, 0, 0.596); margin-left: 300px; margin-top: -25px"></div><br>`
+                  document.getElementById("erroricon3").style.height = "0px"
+                }
+
+
+
+                try {
+                  const url = 'https://www.gruleiru.de:5007'
+                  const Http = new XMLHttpRequest();
+                  Http.open("GET", url);
+                  Http.send();
+                  Http.onload = (e) => {
+                    document.getElementById("block2").innerHTML += "Device-API: API is currently online (EOS)" + "<br>"
+                    document.getElementById("error4").innerHTML = `Device-API: API is currently online (EOS)<div style="border-radius: 30px; width: 30px; height: 30px; background-color: rgba(3, 187, 3, 0.692); margin-left: 300px; margin-top: -25px"></div><br>`
+                    document.getElementById("erroricon4").style.height = "0px"
+                  }
+                  Http.onerror = function () {
+                    document.getElementById("block2").innerHTML += "Device-API: API is currently offline (EOS)" + "<br>"
+                    document.getElementById("error4").innerHTML = `Device-API: API is currently offline (EOS)<div style="border-radius: 30px; width: 30px; height: 30px; background-color: rgba(248, 0, 0, 0.596); margin-left: 300px; margin-top: -25px"></div><br>`
+                    document.getElementById("erroricon4").style.height = "0px"
+                  }
+                } catch (e) {
+                    document.getElementById("block2").innerHTML += "Error: " + e + "<br>"
+                  document.getElementById("error4").innerHTML = `Device-API: API is currently offline (EOS)<div style="border-radius: 30px; width: 30px; height: 30px; background-color: rgba(248, 0, 0, 0.596); margin-left: 300px; margin-top: -25px"></div><br>`
+                  document.getElementById("erroricon4").style.height = "0px"
+                }
+
+
+                const ws1 = new WebSocket("wss://websocket0.pauli1panter.de");
+                const ws2 = new WebSocket("wss://websocket1.pauli1panter.de");
+                ws1.onopen = () => {
+                  document.getElementById("block2").innerHTML += "Websocket 0 is online" + "<br>"
+                  document.getElementById("error5").innerHTML = `Websockets: Websocket 0 is online <div style="border-radius: 30px; width: 30px; height: 30px; background-color: rgba(3, 187, 3, 0.692); margin-left: 300px; margin-top: -25px"></div><br>`
+                  document.getElementById("erroricon5").style.height = "0px"
+                }
+
+                ws1.onerror = () => {
+                    document.getElementById("block2").innerHTML += "Websocket 0 is offline" + "<br>"
+                  document.getElementById("error5").innerHTML = `Websockets: Websocket 0 is offline <div style="border-radius: 30px; width: 30px; height: 30px; background-color: rgba(248, 0, 0, 0.596); margin-left: 300px; margin-top: -25px"></div><br>`
+                  document.getElementById("erroricon5").style.height = "0px"
+                }
+
+                ws2.onopen = () => {
+                    document.getElementById("block2").innerHTML += "Websocket 1 is online" + "<br>"
+                  document.getElementById("error6").innerHTML = `Websockets: Websocket 1 is online <div style="border-radius: 30px; width: 30px; height: 30px; background-color: rgba(3, 187, 3, 0.692); margin-left: 300px; margin-top: -25px"></div><br>`
+                  document.getElementById("erroricon6").style.height = "0px"
+                }
+
+                ws2.onerror = () => {
+                    document.getElementById("block2").innerHTML += "Websocket 1 is offline" + "<br>"
+                  document.getElementById("error6").innerHTML = `Websockets: Websocket 1 is offline <div style="border-radius: 30px; width: 30px; height: 30px; background-color: rgba(248, 0, 0, 0.596); margin-left: 300px; margin-top: -25px"></div><br>`
+                  document.getElementById("erroricon6").style.height = "0px"
+                }
+
+                const Http = new XMLHttpRequest();
+                var request = new XMLHttpRequest();
+                request.open("GET", "./down/reason.json", false);
+                request.send(null);
+                var jsonData = JSON.parse(request.responseText);
+                if (jsonData["reason"] == "none") {
+                  document.getElementById("error7").innerHTML = `Maintenance Reason: No reason given <div style="border-radius: 30px; width: 30px; height: 30px; background-color: rgba(3, 187, 3, 0.692); margin-left: 300px; margin-top: -25px"></div><br>`
+                  document.getElementById("erroricon7").style.height = "0px"
+                  document.getElementById("block2").innerHTML += "Maintenance Reason: No reason given" + "<br>"
+                } else {
+                  document.getElementById("error7").innerHTML = `Reason: ${jsonData["reason"]} <div style="border-radius: 30px; width: 30px; height: 30px; background-color: rgba(248,0,0,0.59); margin-left: 300px; margin-top: -25px"></div><br>`
+                  document.getElementById("erroricon7").style.height = "0px"
+                  document.getElementById("block2").innerHTML += "Reason: " + jsonData["reason"] + "<br>"
+                }
+
+                request.open("GET", "./info/version.json", false);
+                request.send(null);
+                var jsonData2 = JSON.parse(request.responseText);
+                document.getElementById("error8").innerHTML = `Version: ${jsonData2["version"]} <div style="border-radius: 30px; width: 30px; height: 30px; background-color: rgba(3, 187, 3, 0.692); margin-left: 300px; margin-top: -25px"></div><br>`
+                document.getElementById("erroricon8").style.height = "0px"
+                document.getElementById("block2").innerHTML += "Version: " + jsonData2["version"] + "<br>"
+
+                document.getElementById("error9").innerHTML = `Last Update: ${jsonData2["lastupdate"]} <div style="border-radius: 30px; width: 30px; height: 30px; background-color: rgba(3, 187, 3, 0.692); margin-left: 300px; margin-top: -25px"></div><br>`
+                document.getElementById("erroricon9").style.height = "0px"
+                document.getElementById("block2").innerHTML += "Last Update: " + jsonData2["lastupdate"] + "<br>"
+
+                document.getElementById("error10").innerHTML = `Software Status: ${jsonData2["software"]} <div style="border-radius: 30px; width: 30px; height: 30px; background-color: rgba(3, 187, 3, 0.692); margin-left: 300px; margin-top: -25px"></div><br>`
+                document.getElementById("erroricon10").style.height = "0px"
+                document.getElementById("block2").innerHTML += "Software Status: " + jsonData2["software"] + "<br>"
+
+                document.getElementById("error11").innerHTML = `In Entwicklung: ${jsonData2["indev"]} <div style="border-radius: 30px; width: 30px; height: 30px; background-color: rgba(3, 187, 3, 0.692); margin-left: 300px; margin-top: -25px"></div><br>`
+                document.getElementById("erroricon11").style.height = "0px"
+                document.getElementById("block2").innerHTML += "In Entwicklung: " + jsonData2["indev"] + "<br>"
+
+                domain = "https://www.gruleiru.de/"
+                urls = ["anmeldung.html", "changelog.html", "chat.html", "checkapi.html", "foto.html", "fotos.html", "hefa.html", "index.html", "invites.html", "main.html", "panel.html", "public.html"]
+                checkUrls(urls).then(value => {
+
+                        document.getElementById("error12").innerHTML = `Alle Seiten verfügbar: ${value}<div style="border-radius: 30px; width: 30px; height: 30px; background-color: rgba(3, 187, 3, 0.692); margin-left: 300px; margin-top: -25px"></div><br>`
+                        document.getElementById("erroricon12").style.height = "0px";
+
+                })
+                async function checkUrls(urls) {
+                  av = true
+                  for (const url of urls) {
+                    try {
+                      const response = await fetch(domain + url);
+                      if (!response.ok) {
+                        av = false;
+                      }
+                    } catch (error) {
+                      av = false;
+                    }
+                  }
+                  return av;
+                }
+
+
+                function ping() {
+                  let pinger = document.getElementById('pingTester');
+                  let pinger2 = document.getElementById('pingTester2');
+                  let pinger3 = document.getElementById('pingTester3');
+                  let start = new Date().getTime();
+                  pinger.setAttribute('src', 'https://regapi.gruleiru.de');
+                  pinger2.setAttribute('src', 'https://2fa.gruleiru.de');
+                  pinger3.setAttribute('src', 'https://hefa.gruleiru.de');
+                  pinger.onerror = () => {
+                    let end = new Date().getTime();
+                    document.getElementById("block2").innerHTML += `Ping (Span1): ${end - start}ms<br>`
+                    pingSpan.innerHTML = end - start + "ms";
+                  }
+                  pinger2.onerror = () => {
+                    let end2 = new Date().getTime();
+                    document.getElementById("block2").innerHTML += `Ping (Span2): ${end2 - start}ms<br>`
+                    pingSpan2.innerHTML = end2 - start + "ms";
+                  }
+                  pinger3.onerror = () => {
+                    let end3 = new Date().getTime();
+                    document.getElementById("block2").innerHTML += `Ping (Span3): ${end3 - start}ms<br>`
+                    pingSpan3.innerHTML = end3 - start + "ms";
+                  }
+                  setTimeout(() => {
+                    ping();
+                  }, 5000);
+                }
+
+                ping()
+
+                async function checkWebSocket(ws1, ws2) {
+                  let startTime1, endTime1, startTime2, endTime2;
+                  let result1, result2;
+
+                  try {
+                    startTime1 = new Date().getTime();
+                    await ws1.send("ping");
+                    endTime1 = new Date().getTime();
+                    result1 = { status: "online", ping: endTime1 - startTime1 };
+                  } catch (error) {
+                    result1 = { status: "offline" };
+                  }
+
+                  try {
+                    startTime2 = new Date().getTime();
+                    await ws2.send("ping");
+                    endTime2 = new Date().getTime();
+                    result2 = { status: "online", ping: endTime2 - startTime2 };
+                  } catch (error) {
+                    result2 = { status: "offline" };
+                  }
+                  console.log(result1)
+                  console.log(result2)
+                  return [result1, result2];
+                }
+              </script>
+
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <script src="js/jquery-3.3.1.min.js"></script>
+  <script src="js/popper.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+
+</body>
+
+</html>

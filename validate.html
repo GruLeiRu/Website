@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Elternbrief Bestätigung</title>
+
+    <style>
+        span {
+            font-size: 30px;
+            font-weight: bold;
+            color: white;
+            text-align: center;
+            line-height: 100px;
+            font-family: sans-serif;
+        }
+        .box {
+            margin-top: 100px;
+            width: 80%;
+            margin-left: 10%;
+            text-align: center;
+            box-shadow: rgba(11, 11, 11, 0.29) 0px 0px 25px;
+            border-radius: 25px;
+        }
+        .Image {
+            border-radius: 25px;
+            width: 90%;
+            height: auto;
+            margin: 50px auto;
+        }
+        .uploadButton {
+            width:300px;
+            height: 100px;
+            margin: 10px auto;
+            background-color: #a3ffbf;
+            border-radius: 30px;
+            cursor: pointer;
+        }
+        .ph {
+            height: 30px;
+        }
+        .skeleton-box {
+            height: 350px;
+            position: relative;
+            overflow: hidden;
+            margin-top: 50px;
+            background-color: #DDDBDD;
+        }
+        .boxTitle {
+            background-color: #f6f6f6;
+            color: black;
+            font-size: 50px;
+            border-radius: 25px 25px 0 0;
+            height: 100px;
+            display: block;
+        }
+        .finishButton {
+            margin-top: 100px;
+            margin-bottom: 100px;
+            height: 150px;
+            width: 400px;
+            border-radius: 200px;
+        }
+    </style>
+
+    <style>
+        #border2 {
+            position: absolute;
+            top: 0px;
+            right: 0px;
+            bottom: 0px;
+            left: 0px;
+            width: 100%;
+            height: 150%;
+            background-color: #d4d4d479;
+        }
+        #fpopup {
+            background: white;
+            width: auto;
+            position: fixed;
+            left: 10px;
+            bottom: 20px;
+            box-shadow: 0px 0px 15px #cccccc;
+            padding: 5px 10px;
+            border-radius: 25px;
+            margin-right: 10px;
+        }
+
+        #fpopup p {
+            text-align: left;
+            font-size: 35px;
+            color: #4e4e4e;
+            margin-top: -50px;
+        }
+        #fpopup h4 {
+            text-align: left;
+            font-size: 50px;
+            color: #4e4e4e;
+            line-height: 50px;
+        }
+
+
+        #fpopup button {
+            width: 100%;
+            height: 50px;
+            border: navajowhite;
+            background: #38d39f;
+            padding: 5px;
+            border-radius: 90px;
+            margin-bottom: 10px;
+            color: white;
+        }
+    </style>
+    <link rel="stylesheet" href="css/style.css">
+
+</head>
+<body>
+<div class="box">
+    <span class="boxTitle">Impfpass (Alle Seiten)</span>
+    <div class="skeleton-box Image"></div>
+    <div class=displayImageBox>
+        
+    </div>
+    <br>
+    <div class="uploadButton" onclick="this.nextElementSibling.click()"><span>Bilder wählen</span></div>
+    <input type="file" multiple class="imageUpload vacine" name="imageUpload" accept="image/*" style="display: none">
+    <div class="ph"></div>
+</div>
+<div class="box">
+    <span class="boxTitle">Krankenk. Karte Vorderseite</span>
+    <div class="skeleton-box Image"></div>
+    <img class="displayImage Image" src="" alt="" style="display: none"><br>
+    <div class="uploadButton" onclick="this.nextElementSibling.click()"><span>Bild wählen</span></div>
+    <input type="file" class="imageUpload" name="imageUpload" accept="image/*" style="display: none">
+    <div class="ph"></div>
+</div>
+<div class="box">
+    <span class="boxTitle">Krankenk. Karte Rückseite</span>
+    <div class="skeleton-box Image"></div>
+    <img class="displayImage Image" src="" alt="" style="display: none"><br>
+    <div class="uploadButton" onclick="this.nextElementSibling.click()"><span>Bild wählen</span></div>
+    <input type="file" class="imageUpload" name="imageUpload" accept="image/*" style="display: none">
+    <div class="ph"></div>
+</div>
+<div class="uploadButton finishButton" onclick="submit()" style="text-align: center"><span style="font-size: 50px; line-height: 150px">Bestätigen</span></div>
+<div id="border2"></div>
+<div id="fpopup">
+    <div id="fdiv">
+
+    </div>
+</div>
+
+
+<script>
+    
+    
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const uid = urlParams.get('uid')
+    const md5 = urlParams.get('md5')
+
+    var http = new XMLHttpRequest();
+    const url = `https://regapi.gruleiru.de/validationStatus?uid=${uid}&&md5=${md5}`;
+    http.open("GET", url);
+    http.send();
+    http.onload = (e) => {
+        statusResp = JSON.parse(http.responseText);
+        valStatus = statusResp["status"];
+        if (valStatus == "1") {
+            document.getElementById("border2").style.height = "230%"
+            document.getElementById("fdiv").innerHTML = `<h4 style="margin-top: 10px; font-family: sans-serif">Elternerklärung</h4>
+        <p>Diese Elternerklärung wurde erfolgreich bestätigt. Sie können die Einverständniserklärung (digitale Signatur) bis zum Antritt der Herbstfahrt wiederrufen</p> `
+        } else {
+            document.getElementById("border2").style.height = "0%"
+        }
+    }
+
+    var imageUploads = document.getElementsByClassName('imageUpload');
+    for (var i = 0; i < imageUploads.length; i++) {
+        imageUploads[i].addEventListener('change', function(e) {
+            if(e.target.classList.contains("vacine")) {
+                var skeletonBox = e.target.parentElement.getElementsByClassName('skeleton-box')[0];
+                skeletonBox.style.display = "none";
+                for (let fileInt = 0; fileInt < e.target.files.length; fileInt++) {
+                    var box = e.target.parentElement.getElementsByClassName("displayImageBox")[0];
+                    var file = e.target.files[fileInt];
+                    var reader = new FileReader();
+                    
+                    reader.onload = function(event) {
+                        box.innerHTML += `
+                            <img class="displayImage Image" src="${event.target.result}" alt="" style="display: block">
+                        `;
+                    };
+                    
+                    if (file) {
+                        reader.readAsDataURL(file);
+                    }
+                }
+            } else {
+                var file = e.target.files[0];
+                var reader = new FileReader();
+                var box = e.target.parentElement;
+                var displayImage = box.getElementsByClassName('displayImage')[0];
+                var skeletonBox = box.getElementsByClassName('skeleton-box')[0];
+    
+                reader.onloadend = function() {
+                    displayImage.src = reader.result;
+                    displayImage.style.display = "block";
+                    skeletonBox.style.display = "none";
+                }
+    
+                if (file) {
+                    reader.readAsDataURL(file);
+                } else {
+                    displayImage.src = "";
+                }
+            }
+        });
+    }
+    
+    async function submit() {
+        const imageUploads = document.getElementsByClassName('imageUpload');
+        const formData = new FormData();
+        const filePrefixes = ['vac', 'kkF', 'kkB']; // Prefixes for the different groups
+    
+        // Loop through each input
+        for (let i = 0; i < imageUploads.length; i++) {
+            let files = imageUploads[i].files;
+            const prefix = filePrefixes[i] || `file${i}`; // Get prefix or default to 'file{i}'
+    
+            // Loop through each file in current input
+            for (let j = 0; j < files.length; j++) {
+                const formDataKey = `${prefix}_${j}`;
+                formData.append(formDataKey, files[j]);
+                console.log(`File added under key '${formDataKey}': ${files[j].name}`); // Log the key and the name of the file
+            }
+        }
+    
+        const checkURL = `https://regapi.gruleiru.de/validatePost?uid=${uid}&&md5=${md5}`;
+        try {
+            let response = await fetch(checkURL, {
+                method: 'POST',
+                body: formData
+            });
+            let data = await response.json();
+            if (response.ok) {
+                window.location.reload();
+            } else {
+                console.error("Error uploading files: ", data);
+            }
+        } catch (error) {
+            console.error("Fetch error: ", error);
+        }
+    }
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="de">
+
+<head>
+    <script src="https://www.google.com/recaptcha/api.js"></script>
+    <meta charset="utf-8">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="fonts/icomoon/style.css">
+
+    <link rel="stylesheet" href="css/owl.carousel.min.css">
+
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <title>Abmeldung</title>
+
+</head>
+
+<body>
+    <div class="content">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-6 contents">
+                    <div class="row justify-content-center">
+                        <div class="col-md-12">
+                            <div class="form-block" id="block">
+                                <div class="mb-4">
+                                    <h3><strong>HeFa</strong> Abmeldung</h3>
+                                </div>
+
+
+
+                                <script>
+                                    checked = 0
+                                </script>
+
+                                <form method="post" id="f1">
+                                    <label for="st" id="st">Wollen Sie ihr Kind wirklich Abmelden? Dieser Vorgang kann nicht rückgängig gemacht werden.</label>
+                                </form>
+                                <button id="regoutbtn" class="btn btn-pill text-white btn-block btn-primary"
+                                        data-callback='onSubmit'>Fortfahren</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+    <div id="border2"></div>
+    <div id="fpopup">
+        <div id="fdiv">
+
+        </div>
+    </div>
+    <script>
+        const Http2 = new XMLHttpRequest();
+        const checkURL = "https://cd.gruleiru.de"
+        Http2.open("GET", checkURL);
+        Http2.send();
+        Http2.onload = (e) => {
+            response = JSON.parse(Http2.responseText);
+            monthsL = response["monthsLeft"]
+            daysL = response["daysLeft"]
+            auth = response["auth"]
+            if (auth == "1") {
+                document.getElementById("border2").style.height = "0%"
+            } else {
+                document.getElementById("border2").style.height = "150%"
+                document.getElementById("fdiv").innerHTML = `<h4 style="margin-top: 10px;">HeFa Abmeldung</h4>
+        <p>Eine Abmeldung ist leider nur vom 1.11-1.07 möglich. Bitte melden Sie sich bei Fragen <a href="support">hier</a></p> `
+            }
+        }
+    </script>
+    <style>
+        #border2 {
+            position: absolute;
+            top: 0px;
+            right: 0px;
+            bottom: 0px;
+            left: 0px;
+            width: 100%;
+            height: 150%;
+            background-color: #d4d4d479;
+        }
+        #fpopup {
+            background: white;
+            width: auto;
+            position: fixed;
+            left: 10px;
+            bottom: 20px;
+            box-shadow: 0px 0px 15px #cccccc;
+            padding: 5px 10px;
+            border-radius: 12px;
+            margin-right: 10px;
+        }
+
+        #fpopup p {
+            text-align: left;
+            font-size: 15px;
+            color: #4e4e4e;
+        }
+
+
+        #fpopup button {
+            width: 100%;
+            height: 50px;
+            border: navajowhite;
+            background: #38d39f;
+            padding: 5px;
+            border-radius: 90px;
+            margin-bottom: 10px;
+            color: white;
+        }
+    </style>
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/regout.js"></script>
+
+</body>
+
+</html>

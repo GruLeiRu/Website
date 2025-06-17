@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="de">
+
+<head>
+    <!-- Google tag (gtag.js) -->
+    <meta charset="utf-8">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="fonts/icomoon/style.css">
+
+    <link rel="stylesheet" href="css/owl.carousel.min.css">
+
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <title>Hilfe</title>
+</head>
+
+<body>
+    <div class="mb-4">
+        <h3>Gruleiru <strong class="nwtxt">Hilfe</strong></h3>
+        <p class="nwtxt">Hir findest du Hilfe zu dem Gruleiru Panel</p>
+      </div>
+      <span><strong>1. Einstellungen</strong><br>In den Einstellungen können sie ihr Passwort, Benutzernamen und E-Mail Adresse ändern. Unter der Option <strong>Erweiterte Einstellungen</strong> finden sie weitere Einstellungen die keine Direkte Einwirkung auf das Nutzererlebnis haben, aber einige Aufgaben erleichtern können.</span><br>
+      <span><strong>2. Erweiterte Einstellungen</strong><br>In den Erweiterten Einstellungen finden sie 3 Optionen. Die erste Option (Light/Dark Mode) bietet die Möglichkeit das Farb-Thema der Website zu ändern um die Arbeit in einer dunkleren Umgebung zu vereinfachen. Die 2 Option (OTP Login) bietet die möglichkeit die Codes einer Authentifizierungs-App wie z.B. Google Authenticator anstelle des Passwortes zu nutzen. Durch diese Funktion wird das Passwort nicht deaktiviert oder geändert. Diese Funktion dient ausschließlich dazu um den Login-Vorgang zu vereinfachen wenn man sein Passwort vergessen hat. Wichtig: Mit einem Click auf den Button wird ein neuer TOTP-Key generiert und der alte Key ist sofotz ungültig. Clicken sie zur Einrichtung auf den Button und Scannen sie den QR-Code mit ihrer Authenticator App oder mit der Handy Kamera. Die 3 Option bietet die Möglichkeit der einfachen Anmeldung ganz ohne Passwort und Benutzernamen auf beliebig vielen Geräten. Dazu wird eine PERM-Session auf einem Gerät verwendet um über diese Session die anderen Geräte einzuloggen. Clicken sie zur Einrichtung auf den Button und scannen sie den QR-Code. Ab jetzt können sie bei der Anmeldung die Option "Login mit QR-Code" auswählen und den Code mit ihrem Handy scannen. Wichtig: Es ist zu beachten, dass wenn sie auf den Button clicken dass eine neue PERM-Session generiert wird und die alte Session nicht mehr gültig ist. Wenn sie diesen Code also nicht scannen können sie die Option zum Login mit QR nicht nutzen bis sie eienen neuen Code generieren und ihn scannen. Um die Option zu deaktivieren clicken sie einfach erneut auf den Button und generieren einen neuen QR-Code ohne ihn zu scannen!</span><br>
+      <span><strong>3. Login</strong><br>Der Login zum Gruleiru Panel ist mit Benutzername oder E-Mail Adresse und Passwort, OTP (One-Time-Passwort) oder <strong>GEN-Token</strong> oder Optional via QR-Code möglich. Das Login System basiert auf einem <strong>Session System</strong>, wobei bei einem Login eine Session generiert wird und beim ausloggen die session gelöscht wird. Es kann jeweils nur eine Session existieren, heißt: wenn sie sich an einem anderen Ort bzw auf einem anderen Gerät anmelden werden alle anderen Geräte abgemeldet. Ausgenommen davon ist das Hauptgerät mit der <strong>PERM-Session</strong>, wobei diese Session nur zum <strong>QR-Login</strong> dient. Beim login werden ihre Daten über eine HTTPS Anfrage an unser Backend gesendet, welches diese Daten verarbeitet. Ihr Passwort wird in keiner Weise gespeichert und wird nur mit der Sha265 Methode verschlüsselt und verifiziert!</span><br>
+      <span><strong>4. Session System</strong><br>Das Session system erlaubt ein Reibungsloses Benutzererlebnis und sorgt für maximale Sicherheit durch die 10 Stelligen Session IDs. Pro Benutzer kann nur eine Session gleichzeitig verwendet werden, was dazu beiträgt, dass die Sicherheit für ihr Konto gewährt ist.</span><br>
+      <span><strong>5. GEN-Token</strong><br>Der GEN-Token (Generated-Token) ist ein Token, der zum Login verwendet wird, wenn ein Benuter sein Passwort vergessen hat. Ein GEN-Token ist nur ein mal gültig und kann auch nur verwendet werden, wenn der Benutzer ausdrücklich sein Passwort vergessen hat. Den GEN-Token erhällt man per Mail und man wird ebenso benachrichtigt, wenn jemand sich mit dem GEN-Token eingeloggt hat.</span><br>
+      <span><strong>6. PERM-SESSION</strong><br>Eine Perm-Session (Permanent-Session) ist eine Session die nicht abläuft. Diese Sessions haben einen anderen Aufbau und Nutzen als normale Sessions. Sie werden nur verwenden um das Hauptgerät des Benutzers zu markieren. Da eine PERM-Session den <strong>Login über QR-Codes</strong> ermöglicht sind diese Sicherer aufgebaut als normale Sessions. Eine PERM-Session besteht aus einem Benutzernamen und einer 50 Stelligen Nummer.</span><br>
+      <span><strong>7. QR-Login</strong><br>Das <strong>PERM-Session</strong> System erlaubt eine einfache Anmeldung ohne Benutzername und Passwort nur per QR-Code. Wobei das Hauptgerät (bestenfalls ein Handy oder gerät mit QR fähiger Kamera) zum login dient.</strong></span><br>
+      <span><strong>8. Einladungen</strong><br>Das Einladungs-System erlaubt es Benutzern andere Benutzer einfach zu einem Termin einzuladen und Einladungen übersichtlich zu verwalten.</span>
+      <script src="js/jquery-3.3.1.min.js"></script>
+      <script src="js/popper.min.js"></script>
+      <script src="js/bootstrap.min.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Phone Verification</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            font-size: 54px; /* Increased font size */
+        }
+
+        form {
+            background-color: #fff;
+            padding: 90px; /* Increased padding */
+            border-radius: 25px;
+            box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
+        }
+
+        input[type="text"], input[type="tel"] {
+            width: 100%;
+            padding: 45px; /* Increased padding */
+            margin: 45px 0; /* Increased margin */
+            border-radius: 25px;
+            border: 1px solid #ddd;
+            margin-left: -50px;
+            font-size: 54px; /* Increased font size */
+        }
+
+        input[type="submit"], button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 45px 90px; /* Increased padding */
+            margin: 45px 0; /* Increased margin */
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 54px; /* Increased font size */
+        }
+
+        input[type="submit"]:hover, button:hover {
+            background-color: #45a049;
+        }
+
+        label {
+            font-size: 54px; /* Increased font size */
+        }
+    </style>
+</head>
+<body>
+    <form id="verificationForm">
+        <label for="name">Name:</label><br>
+        <input type="text" id="name" name="name"><br>
+        <label for="phone">Telefonnummer:</label><br>
+        <input type="tel" id="phone" name="phone"><br>
+        <input type="submit" value="Fortfahren" id="submit">
+      <div id="codeInput" style="display: none;">
+        <label for="code">SMS code:</label><br>
+        <input type="text" id="code" name="code"><br>
+        <button onclick="verifyCode()">Verify</button>
+      </div>
+    </form>
+
+    <script>
+        document.getElementById('verificationForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            var name = document.getElementById('name').value;
+            var phone = document.getElementById('phone').value;
+
+            fetch('https://create.gruleiru.de/send_verification', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    phone_number: phone
+                }),
+            })
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('codeInput').style.display = 'block';
+                    document.getElementById("name").disabled = true;
+                    document.getElementById("phone").disabled = true;
+                    document.getElementById("submit").style.display = 'none';
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
+        });
+
+        function verifyCode() {
+            var phone = document.getElementById('phone').value;
+            var code = document.getElementById('code').value;
+
+            fetch('https://create.gruleiru.de/verify_code', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    phone_number: phone,
+                    code: code
+                }),
+            })
+                .then(response => response.json())
+                .then(data => {
+                    alert('Die Registrierung war erfolgreich! Sie können sich nun mit dem angegebenen Namen und dem Code, den Sie per SMS erhalten haben, anmelden. Denken Sie bitte daran, eine E-Mail Adresse zu hinterlegen und ihr Passwort zu ändern.');
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
+        }
+
+
+    </script>
+</body>
+</html>

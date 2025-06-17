@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>dB Messung</title>
+</head>
+<body>
+    <h1>warten...</h1>
+    <script>
+        setInterval(() => {
+            fetch('https://api0.msparty.de/current_db', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+                .then(response => response.json())
+                .then(data => {
+                    document.querySelector('h1').innerText = data["current_db"] + "dB";
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
+        }, 1000); // 5000 milliseconds = 5 seconds // 5000 milliseconds = 5 seconds
+    </script>
+    <form id="neck">
+        <input disabled type="text" name="db" placeholder="dB eingeben" style="border-top-right-radius: 0; border-bottom-right-radius: 0">
+        <input disabled type="submit" value="festlegen" style="border-top-left-radius: 0; border-bottom-left-radius: 0">
+    </form>
+    <footer>
+        <p>Developed & Published by Lino | Powered by Spotipy</p>
+    </footer>
+</body>
+<style>
+    footer {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        text-align: center;
+        padding: 10px;
+        background-color: #121212;
+    }
+    body {
+        background: #121212 linear-gradient(to top, #381005 0%, #121212 30%);
+        color: #b3b3b3;
+        font-family: 'Arial', sans-serif;
+        height: 100vh;
+    }
+
+    form {
+        margin-bottom: 20px;
+    }
+
+    input[type="text"] {
+        background-color: #181818;
+        border: none;
+        border-radius: 150px;
+        padding: 25px 60px;
+        width: 450px;
+        font-size: 36px;
+        color: #b3b3b3;
+    }
+    h1 {
+        font-size: 200px;
+        text-align: center;
+        margin-top: 200px;
+        text-shadow: rgba(255, 55, 0, 0.35) 0 0 15px;
+        color: #fa4614;
+    }
+    input[type="submit"] {
+        background-color: #fa4614;
+        border: none;
+        border-radius: 150px;
+        color: #ffffff;
+        padding: 25px 60px;
+        font-size: 36px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+    #neck {
+        display: flex;
+        justify-content: center;
+    }
+</style>
+</html>
